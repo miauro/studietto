@@ -1,912 +1,1741 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Studietto Scanetto</title>
-<style>
-/* =================================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studietto Scanetto</title>
+    <style>
+      /* =================================================================
    DESIGN SYSTEM — Inspired by Nothing / ChainGPT grid aesthetic
    Monospace type, sharp borders, warm accent, structured grid
    ================================================================= */
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap");
 
-:root {
-  --bg:        #f4f2ee;
-  --surface:   #ffffff;
-  --surface2:  #eae8e3;
-  --border:    #c8c5be;
-  --border2:   #a8a59e;
-  --text:      #1a1a1a;
-  --text2:     #6b6860;
-  --accent:    #e8430a;
-  --accent-bg: rgba(232,67,10,.08);
-  --accent2:   #c73808;
-  --rojo:      #d62828;
-  --rojo-bg:   rgba(214,40,40,.08);
-  --amarillo:  #c49b0c;
-  --amarillo-bg:rgba(196,155,12,.08);
-  --verde:     #1b8a4a;
-  --verde-bg:  rgba(27,138,74,.08);
-  --gris:      #9a9790;
-  --gris-bg:   rgba(154,151,144,.08);
-  --mono:      'Space Mono', 'Courier New', monospace;
-  --sans:      'Inter', 'Segoe UI', system-ui, sans-serif;
-  --radius:    0px;
-  --shadow:    none;
-}
-.dark {
-  --bg:        #111111;
-  --surface:   #1a1a1a;
-  --surface2:  #222222;
-  --border:    #333333;
-  --border2:   #555555;
-  --text:      #e8e6e1;
-  --text2:     #8a877f;
-  --accent-bg: rgba(232,67,10,.12);
-  --rojo-bg:   rgba(214,40,40,.12);
-  --amarillo-bg:rgba(196,155,12,.12);
-  --verde-bg:  rgba(27,138,74,.12);
-  --gris-bg:   rgba(154,151,144,.10);
-  --shadow:    none;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  transition: background .2s, color .2s;
-  -webkit-font-smoothing: antialiased;
-}
-button { font-family: inherit; cursor: pointer; }
-input, select, textarea {
-  font-family: var(--sans);
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  font-size: .875rem;
-  transition: border .15s;
-}
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
-textarea { resize: vertical; min-height: 60px; }
-::selection { background: var(--accent); color: #fff; }
+      :root {
+        --bg: #f4f2ee;
+        --surface: #ffffff;
+        --surface2: #eae8e3;
+        --border: #c8c5be;
+        --border2: #a8a59e;
+        --text: #1a1a1a;
+        --text2: #6b6860;
+        --accent: #e8430a;
+        --accent-bg: rgba(232, 67, 10, 0.08);
+        --accent2: #c73808;
+        --rojo: #d62828;
+        --rojo-bg: rgba(214, 40, 40, 0.08);
+        --amarillo: #c49b0c;
+        --amarillo-bg: rgba(196, 155, 12, 0.08);
+        --verde: #1b8a4a;
+        --verde-bg: rgba(27, 138, 74, 0.08);
+        --gris: #9a9790;
+        --gris-bg: rgba(154, 151, 144, 0.08);
+        --mono: "Space Mono", "Courier New", monospace;
+        --sans: "Inter", "Segoe UI", system-ui, sans-serif;
+        --radius: 0px;
+        --shadow: none;
+      }
+      .dark {
+        --bg: #111111;
+        --surface: #1a1a1a;
+        --surface2: #222222;
+        --border: #333333;
+        --border2: #555555;
+        --text: #e8e6e1;
+        --text2: #8a877f;
+        --accent-bg: rgba(232, 67, 10, 0.12);
+        --rojo-bg: rgba(214, 40, 40, 0.12);
+        --amarillo-bg: rgba(196, 155, 12, 0.12);
+        --verde-bg: rgba(27, 138, 74, 0.12);
+        --gris-bg: rgba(154, 151, 144, 0.1);
+        --shadow: none;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--sans);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        -webkit-font-smoothing: antialiased;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+      input,
+      select,
+      textarea {
+        font-family: var(--sans);
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 12px;
+        font-size: 0.875rem;
+        transition: border 0.15s;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+      ::selection {
+        background: var(--accent);
+        color: #fff;
+      }
 
-/* =================================================================
+      /* =================================================================
    LAYOUT
    ================================================================= */
-.app { max-width: 1060px; margin: 0 auto; padding: 0 20px 100px; }
+      .app {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 0 20px 100px;
+      }
 
-/* --- Top bar --- */
-.topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 0; border-bottom: 2px solid var(--text);
-  margin-bottom: 0; flex-wrap: wrap; gap: 12px;
-}
-.logo {
-  font-family: var(--mono); font-size: 1.1rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2px;
-}
-.logo span { color: var(--accent); }
-.topbar-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-.tb-btn {
-  font-family: var(--mono); font-size: .7rem; text-transform: uppercase;
-  letter-spacing: .5px; padding: 7px 14px;
-  background: var(--surface); border: 1px solid var(--border);
-  color: var(--text2); transition: all .15s;
-}
-.tb-btn:hover { border-color: var(--accent); color: var(--accent); }
-.tb-btn.primary {
-  background: var(--accent); border-color: var(--accent);
-  color: #fff; font-weight: 700;
-}
-.tb-btn.primary:hover { background: var(--accent2); border-color: var(--accent2); }
+      /* --- Top bar --- */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 0;
+        border-bottom: 2px solid var(--text);
+        margin-bottom: 0;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .logo {
+        font-family: var(--mono);
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+      .topbar-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .tb-btn {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 7px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text2);
+        transition: all 0.15s;
+      }
+      .tb-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .tb-btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        font-weight: 700;
+      }
+      .tb-btn.primary:hover {
+        background: var(--accent2);
+        border-color: var(--accent2);
+      }
 
-/* --- Tabs --- */
-.tabs {
-  display: flex; gap: 0; border-bottom: 1px solid var(--border);
-  margin-bottom: 24px; overflow-x: auto;
-}
-.tab {
-  font-family: var(--mono); font-size: .75rem; text-transform: uppercase;
-  letter-spacing: .5px; padding: 14px 20px; background: none;
-  border: none; border-bottom: 2px solid transparent;
-  color: var(--text2); white-space: nowrap; transition: all .15s;
-}
-.tab:hover { color: var(--text); }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.panel { display: none; }
-.panel.active { display: block; }
+      /* --- Tabs --- */
+      .tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 24px;
+        overflow-x: auto;
+      }
+      .tab {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 14px 20px;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: var(--text2);
+        white-space: nowrap;
+        transition: all 0.15s;
+      }
+      .tab:hover {
+        color: var(--text);
+      }
+      .tab.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
 
-/* --- Grid section headers --- */
-.section { margin-bottom: 28px; }
-.section-head {
-  display: flex; align-items: baseline; gap: 10px;
-  margin-bottom: 14px; border-bottom: 1px solid var(--border);
-  padding-bottom: 8px;
-}
-.section-head h2 {
-  font-family: var(--mono); font-size: .85rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 1px;
-}
-.section-head .badge {
-  font-family: var(--mono); font-size: .7rem;
-  background: var(--accent); color: #fff;
-  padding: 2px 8px; font-weight: 700;
-}
+      /* --- Grid section headers --- */
+      .section {
+        margin-bottom: 28px;
+      }
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+      }
+      .section-head h2 {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .section-head .badge {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        background: var(--accent);
+        color: #fff;
+        padding: 2px 8px;
+        font-weight: 700;
+      }
 
-/* --- Status --- */
-.dot { width: 8px; height: 8px; display: inline-block; flex-shrink: 0; }
-.dot-rojo { background: var(--rojo); }
-.dot-amarillo { background: var(--amarillo); }
-.dot-verde { background: var(--verde); }
-.dot-sin { background: var(--gris); }
-.pill {
-  font-family: var(--mono); display: inline-block; padding: 3px 10px;
-  font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
-}
-.pill-rojo { background: var(--rojo-bg); color: var(--rojo); }
-.pill-amarillo { background: var(--amarillo-bg); color: var(--amarillo); }
-.pill-verde { background: var(--verde-bg); color: var(--verde); }
-.pill-sin { background: var(--gris-bg); color: var(--gris); }
+      /* --- Status --- */
+      .dot {
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+        flex-shrink: 0;
+      }
+      .dot-rojo {
+        background: var(--rojo);
+      }
+      .dot-amarillo {
+        background: var(--amarillo);
+      }
+      .dot-verde {
+        background: var(--verde);
+      }
+      .dot-sin {
+        background: var(--gris);
+      }
+      .pill {
+        font-family: var(--mono);
+        display: inline-block;
+        padding: 3px 10px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .pill-rojo {
+        background: var(--rojo-bg);
+        color: var(--rojo);
+      }
+      .pill-amarillo {
+        background: var(--amarillo-bg);
+        color: var(--amarillo);
+      }
+      .pill-verde {
+        background: var(--verde-bg);
+        color: var(--verde);
+      }
+      .pill-sin {
+        background: var(--gris-bg);
+        color: var(--gris);
+      }
 
-/* --- Cards (Hoy view) --- */
-.card {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 14px 18px; margin-bottom: 6px; transition: all .12s;
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-}
-.card:hover { border-color: var(--accent); }
-.card-id {
-  font-family: var(--mono); font-size: .75rem; color: var(--text2);
-  min-width: 32px; font-weight: 700;
-}
-.card-title { flex: 1; font-size: .9rem; font-weight: 500; min-width: 180px; }
-.card-meta {
-  font-family: var(--mono); font-size: .7rem; color: var(--text2);
-  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
-}
-.overdue { color: var(--rojo); font-weight: 700; }
-.btn-sm {
-  font-family: var(--mono); font-size: .65rem; text-transform: uppercase;
-  letter-spacing: .5px; padding: 6px 14px;
-  background: var(--accent); border: 1px solid var(--accent);
-  color: #fff; font-weight: 700; transition: all .15s; white-space: nowrap;
-}
-.btn-sm:hover { background: var(--accent2); border-color: var(--accent2); }
+      /* --- Cards (Hoy view) --- */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 14px 18px;
+        margin-bottom: 6px;
+        transition: all 0.12s;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .card:hover {
+        border-color: var(--accent);
+      }
+      .card-id {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--text2);
+        min-width: 32px;
+        font-weight: 700;
+      }
+      .card-title {
+        flex: 1;
+        font-size: 0.9rem;
+        font-weight: 500;
+        min-width: 180px;
+      }
+      .card-meta {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--text2);
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .overdue {
+        color: var(--rojo);
+        font-weight: 700;
+      }
+      .btn-sm {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 6px 14px;
+        background: var(--accent);
+        border: 1px solid var(--accent);
+        color: #fff;
+        font-weight: 700;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn-sm:hover {
+        background: var(--accent2);
+        border-color: var(--accent2);
+      }
 
-/* --- Table (Temario) --- */
-.table-controls {
-  display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items: center;
-}
-.table-controls select, .table-controls input {
-  font-family: var(--mono); font-size: .75rem; padding: 8px 10px;
-}
-.topic-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
-.topic-table th {
-  font-family: var(--mono); text-align: left; padding: 10px 12px;
-  border-bottom: 2px solid var(--text); color: var(--text2);
-  font-size: .65rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .5px; cursor: pointer; white-space: nowrap; user-select: none;
-}
-.topic-table th:hover { color: var(--accent); }
-.topic-table th .sort-arrow { margin-left: 3px; }
-.topic-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
-.topic-table tr:hover { background: var(--surface2); }
-.topic-table tr { cursor: pointer; transition: background .1s; }
-.block-header td {
-  font-family: var(--mono); font-weight: 700; font-size: .7rem;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--accent);
-  background: var(--surface2); cursor: default; padding: 12px;
-}
-.block-header:hover { background: var(--surface2) !important; }
-.delta-positive { color: var(--verde); font-weight: 700; }
-.delta-negative { color: var(--rojo); font-weight: 700; }
+      /* --- Table (Temario) --- */
+      .table-controls {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .table-controls select,
+      .table-controls input {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        padding: 8px 10px;
+      }
+      .topic-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+      }
+      .topic-table th {
+        font-family: var(--mono);
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 2px solid var(--text);
+        color: var(--text2);
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+      }
+      .topic-table th:hover {
+        color: var(--accent);
+      }
+      .topic-table th .sort-arrow {
+        margin-left: 3px;
+      }
+      .topic-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .topic-table tr:hover {
+        background: var(--surface2);
+      }
+      .topic-table tr {
+        cursor: pointer;
+        transition: background 0.1s;
+      }
+      .block-header td {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent);
+        background: var(--surface2);
+        cursor: default;
+        padding: 12px;
+      }
+      .block-header:hover {
+        background: var(--surface2) !important;
+      }
+      .delta-positive {
+        color: var(--verde);
+        font-weight: 700;
+      }
+      .delta-negative {
+        color: var(--rojo);
+        font-weight: 700;
+      }
 
-/* --- Stats grid --- */
-.stats-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px; margin-bottom: 24px;
-}
-.stat-card {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 18px; text-align: center;
-}
-.stat-value { font-family: var(--mono); font-size: 1.8rem; font-weight: 700; }
-.stat-label {
-  font-family: var(--mono); font-size: .6rem; color: var(--text2);
-  text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
-}
+      /* --- Stats grid --- */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 18px;
+        text-align: center;
+      }
+      .stat-value {
+        font-family: var(--mono);
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+      .stat-label {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        color: var(--text2);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 4px;
+      }
 
-/* --- Chart --- */
-.chart-box {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 20px; margin-bottom: 20px;
-}
-.chart-box h3 {
-  font-family: var(--mono); font-size: .75rem; text-transform: uppercase;
-  letter-spacing: .5px; margin-bottom: 14px; color: var(--text2);
-}
+      /* --- Chart --- */
+      .chart-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .chart-box h3 {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 14px;
+        color: var(--text2);
+      }
 
-/* --- Simulacro cards --- */
-.sim-card {
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 18px 20px; margin-bottom: 10px; transition: border .12s;
-}
-.sim-card:hover { border-color: var(--accent); }
-.sim-header {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
-}
-.sim-date { font-family: var(--mono); font-size: .8rem; font-weight: 700; }
-.sim-score { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; }
-.sim-meta { font-family: var(--mono); font-size: .7rem; color: var(--text2); }
-.sim-topics {
-  display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px;
-}
-.sim-topic-chip {
-  font-family: var(--mono); font-size: .6rem; padding: 3px 8px;
-  border: 1px solid var(--border); color: var(--text2);
-}
+      /* --- Simulacro cards --- */
+      .sim-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 18px 20px;
+        margin-bottom: 10px;
+        transition: border 0.12s;
+      }
+      .sim-card:hover {
+        border-color: var(--accent);
+      }
+      .sim-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+      .sim-date {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      .sim-score {
+        font-family: var(--mono);
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      .sim-meta {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--text2);
+      }
+      .sim-topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+      .sim-topic-chip {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        padding: 3px 8px;
+        border: 1px solid var(--border);
+        color: var(--text2);
+      }
 
-/* --- Modal --- */
-.modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.45); z-index: 200;
-  justify-content: center; align-items: center; padding: 16px;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--surface); border: 2px solid var(--text);
-  padding: 28px; width: 100%; max-width: 520px;
-  max-height: 90vh; overflow-y: auto;
-}
-.modal h2 {
-  font-family: var(--mono); font-size: .85rem; text-transform: uppercase;
-  letter-spacing: 1px; margin-bottom: 20px;
-}
-.form-group { margin-bottom: 16px; }
-.form-group label {
-  display: block; font-family: var(--mono); font-size: .65rem;
-  text-transform: uppercase; letter-spacing: .5px;
-  color: var(--text2); margin-bottom: 6px; font-weight: 700;
-}
-.form-group input, .form-group select, .form-group textarea { width: 100%; }
-.form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+      /* --- Modal --- */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 200;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--surface);
+        border: 2px solid var(--text);
+        padding: 28px;
+        width: 100%;
+        max-width: 520px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal h2 {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        display: block;
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text2);
+        margin-bottom: 6px;
+        font-weight: 700;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+      }
+      .form-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
 
-/* --- Detail overlay --- */
-.detail-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.45); z-index: 200;
-  justify-content: center; align-items: flex-start; padding: 16px; padding-top: 5vh;
-}
-.detail-overlay.open { display: flex; }
-.detail-panel {
-  background: var(--surface); border: 2px solid var(--text);
-  padding: 28px; width: 100%; max-width: 640px;
-  max-height: 85vh; overflow-y: auto;
-}
-.detail-panel h2 { font-size: 1rem; margin-bottom: 4px; }
-.detail-block-label {
-  font-family: var(--mono); font-size: .65rem; color: var(--text2);
-  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px;
-}
-.detail-stats {
-  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
-}
-.session-list { list-style: none; }
-.session-item {
-  display: flex; gap: 12px; align-items: center; padding: 8px 0;
-  border-bottom: 1px solid var(--border); font-size: .85rem; flex-wrap: wrap;
-}
-.session-item .s-date {
-  font-family: var(--mono); color: var(--text2); min-width: 80px; font-size: .75rem;
-}
-.session-item .s-score { font-family: var(--mono); font-weight: 700; min-width: 40px; }
-.session-item .s-dur { font-family: var(--mono); color: var(--text2); font-size: .7rem; }
-.session-item .s-notes { color: var(--text2); font-size: .8rem; font-style: italic; width: 100%; margin-top: 2px; }
-.session-delete {
-  background: none; border: none; color: var(--gris);
-  font-size: .7rem; padding: 2px 6px;
-}
-.session-delete:hover { color: var(--rojo); }
+      /* --- Detail overlay --- */
+      .detail-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 200;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 16px;
+        padding-top: 5vh;
+      }
+      .detail-overlay.open {
+        display: flex;
+      }
+      .detail-panel {
+        background: var(--surface);
+        border: 2px solid var(--text);
+        padding: 28px;
+        width: 100%;
+        max-width: 640px;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      .detail-panel h2 {
+        font-size: 1rem;
+        margin-bottom: 4px;
+      }
+      .detail-block-label {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--text2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 16px;
+      }
+      .detail-stats {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .session-list {
+        list-style: none;
+      }
+      .session-item {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.85rem;
+        flex-wrap: wrap;
+      }
+      .session-item .s-date {
+        font-family: var(--mono);
+        color: var(--text2);
+        min-width: 80px;
+        font-size: 0.75rem;
+      }
+      .session-item .s-score {
+        font-family: var(--mono);
+        font-weight: 700;
+        min-width: 40px;
+      }
+      .session-item .s-dur {
+        font-family: var(--mono);
+        color: var(--text2);
+        font-size: 0.7rem;
+      }
+      .session-item .s-notes {
+        color: var(--text2);
+        font-size: 0.8rem;
+        font-style: italic;
+        width: 100%;
+        margin-top: 2px;
+      }
+      .session-delete {
+        background: none;
+        border: none;
+        color: var(--gris);
+        font-size: 0.7rem;
+        padding: 2px 6px;
+      }
+      .session-delete:hover {
+        color: var(--rojo);
+      }
 
-/* --- FAB --- */
-.fab {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--accent); color: #fff; border: none;
-  width: 52px; height: 52px; font-size: 1.5rem; font-weight: 700;
-  z-index: 50; transition: transform .12s, background .12s;
-  font-family: var(--mono);
-}
-.fab:hover { background: var(--accent2); transform: scale(1.05); }
+      /* --- FAB --- */
+      .fab {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        width: 52px;
+        height: 52px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        z-index: 50;
+        transition:
+          transform 0.12s,
+          background 0.12s;
+        font-family: var(--mono);
+      }
+      .fab:hover {
+        background: var(--accent2);
+        transform: scale(1.05);
+      }
 
-/* --- Responsive --- */
-@media (max-width: 640px) {
-  .app { padding: 0 12px 80px; }
-  .topbar { padding: 14px 0; }
-  .logo { font-size: .9rem; }
-  .tab { padding: 10px 14px; font-size: .65rem; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .topic-table { font-size: .75rem; }
-  .topic-table th, .topic-table td { padding: 8px 6px; }
-  .card { padding: 12px; gap: 10px; }
-  .fab { width: 46px; height: 46px; font-size: 1.2rem; bottom: 16px; right: 16px; }
-  .diag-bar-title { display: none; }
-}
-
-/* --- Empty state --- */
-.empty-state {
-  font-family: var(--mono); font-size: .8rem; color: var(--text2);
-  padding: 30px 0; text-align: center; letter-spacing: .5px;
-}
-</style>
-</head>
-<body>
-<div class="app">
-
-  <!-- ============ TOP BAR ============ -->
-  <div class="topbar">
-    <div class="logo">Studietto <span>Scanetto</span></div>
-    <div class="topbar-actions">
-      <button class="tb-btn" onclick="exportJSON()">Export</button>
-      <button class="tb-btn" onclick="document.getElementById('import-file').click()">Import</button>
-      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
-<button class="tb-btn" id="theme-toggle" onclick="toggleTheme()">Dark</button>
-    </div>
-  </div>
-
-  <!-- ============ TABS ============ -->
-  <div class="tabs">
-    <button class="tab active" data-tab="hoy">Hoy</button>
-    <button class="tab" data-tab="temario">Temario</button>
-    <button class="tab" data-tab="simulacros">Simulacros</button>
-    <button class="tab" data-tab="stats">Estadisticas</button>
-  </div>
-
-  <!-- ============ HOY ============ -->
-  <div class="panel active" id="panel-hoy">
-    <div style="font-family:var(--mono);font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;" id="today-label"></div>
-    <h2 style="font-family:var(--mono);font-size:1.4rem;font-weight:700;margin-bottom:24px;" id="today-header"></h2>
-    <div class="section">
-      <div class="section-head">
-        <h2>Repasos pendientes</h2>
-        <span class="badge" id="due-count">0</span>
-      </div>
-      <div id="due-list"></div>
-    </div>
-    <div class="section">
-      <div class="section-head"><h2>Proximos 3 dias</h2></div>
-      <div id="upcoming-list"></div>
-    </div>
-  </div>
-
-  <!-- ============ TEMARIO ============ -->
-  <div class="panel" id="panel-temario">
-    <div class="table-controls">
-      <select id="filter-status" onchange="renderTemario()">
-        <option value="all">Todos</option>
-        <option value="rojo">Rojo</option>
-        <option value="amarillo">Amarillo</option>
-        <option value="verde">Verde</option>
-        <option value="sin">Sin empezar</option>
-      </select>
-      <select id="filter-block" onchange="renderTemario()">
-        <option value="all">Ambos bloques</option>
-        <option value="común">Comun</option>
-        <option value="específico">Especifico</option>
-      </select>
-      <input type="text" id="filter-search" placeholder="Buscar..." oninput="renderTemario()" style="flex:1;min-width:100px;">
-    </div>
-    <div style="overflow-x:auto;">
-      <table class="topic-table" id="topic-table">
-        <thead><tr>
-          <th data-sort="number">No<span class="sort-arrow"></span></th>
-          <th data-sort="title">Titulo<span class="sort-arrow"></span></th>
-          <th data-sort="lastScore">Ultimo<span class="sort-arrow"></span></th>
-          <th data-sort="nextReview">Prox. repaso<span class="sort-arrow"></span></th>
-          <th data-sort="status">Estado<span class="sort-arrow"></span></th>
-        </tr></thead>
-        <tbody id="topic-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ============ SIMULACROS ============ -->
-  <div class="panel" id="panel-simulacros">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
-      <div class="section-head" style="margin-bottom:0;border:none;padding:0;">
-        <h2>Simulacros</h2>
-        <span class="badge" id="sim-count">0</span>
-      </div>
-      <button class="btn-sm" onclick="openSimModal()">+ Nuevo Simulacro</button>
-    </div>
-    <div class="chart-box" id="sim-chart-box">
-      <h3>Evolucion de simulacros</h3>
-      <svg id="sim-chart" width="100%" height="180"></svg>
-    </div>
-    <div id="sim-list"></div>
-  </div>
-
-  <!-- ============ ESTADISTICAS ============ -->
-  <div class="panel" id="panel-stats">
-    <div class="stats-grid" id="stats-grid"></div>
-    <div class="chart-box">
-      <h3>Nota media en el tiempo</h3>
-      <svg id="chart-svg" width="100%" height="200"></svg>
-      <div id="chart-empty" class="empty-state" style="display:none;">Registra al menos 2 sesiones para ver la grafica.</div>
-    </div>
-    <div class="stats-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
-      <div class="stat-card">
-        <div class="stat-value" id="streak-value">0</div>
-        <div class="stat-label">Dias de racha</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="total-hours">0</div>
-        <div class="stat-label">Horas totales</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="total-sessions">0</div>
-        <div class="stat-label">Sesiones totales</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============ FAB ============ -->
-<button class="fab" onclick="openSessionModal()" title="Registrar sesion">+</button>
-
-<!-- ============ MODAL: Sesion ============ -->
-<div class="modal-overlay" id="session-modal">
-  <div class="modal">
-    <h2 id="modal-title">Registrar sesion</h2>
-    <div class="form-group">
-      <label>Tema</label>
-      <select id="m-topic"></select>
-    </div>
-    <div class="form-group">
-      <label>Fecha</label>
-      <input type="date" id="m-date">
-    </div>
-    <div class="form-group">
-      <label>Puntuacion (0-10)</label>
-      <input type="number" id="m-score" min="0" max="10" step="0.1" placeholder="7.5">
-    </div>
-    <div class="form-group">
-      <label>Duracion (min, opcional)</label>
-      <input type="number" id="m-duration" min="0" step="1" placeholder="90">
-    </div>
-    <div class="form-group">
-      <label>Notas (opcional)</label>
-      <textarea id="m-notes" placeholder="Fallos clave, observaciones..."></textarea>
-    </div>
-    <div class="form-actions">
-      <button class="tb-btn" onclick="closeSessionModal()">Cancelar</button>
-      <button class="tb-btn primary" onclick="saveSession()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============ MODAL: Detail ============ -->
-<div class="detail-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
-  <div class="detail-panel">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-      <div>
-        <h2 id="detail-title"></h2>
-        <div class="detail-block-label" id="detail-block"></div>
-      </div>
-      <button class="tb-btn" onclick="closeDetail()">X</button>
-    </div>
-    <div class="detail-stats" id="detail-stats"></div>
-    <div style="margin-bottom:14px;">
-      <button class="btn-sm" onclick="openSessionModalForTopic(currentDetailTopic)">+ Registrar sesion</button>
-    </div>
-    <div style="font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:8px;">Historial</div>
-    <ul class="session-list" id="detail-sessions"></ul>
-  </div>
-</div>
-
-<!-- ============ MODAL: Simulacro ============ -->
-<div class="modal-overlay" id="sim-modal">
-  <div class="modal" style="max-width:560px;">
-    <h2>Registrar simulacro</h2>
-    <div class="form-group">
-      <label>Fecha</label>
-      <input type="date" id="sim-date">
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <div class="form-group" style="flex:1;min-width:120px;">
-        <label>Aciertos</label>
-        <input type="number" id="sim-aciertos" min="0" step="1" placeholder="65">
-      </div>
-      <div class="form-group" style="flex:1;min-width:120px;">
-        <label>Total preguntas</label>
-        <input type="number" id="sim-total" min="1" step="1" placeholder="100" value="100">
-      </div>
-      <div class="form-group" style="flex:1;min-width:120px;">
-        <label>Errores (penalizan)</label>
-        <input type="number" id="sim-errores" min="0" step="1" placeholder="15">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Blancos (sin contestar)</label>
-      <input type="number" id="sim-blancos" min="0" step="1" placeholder="20">
-    </div>
-    <div class="form-group">
-      <label>Tiempo (minutos, opcional)</label>
-      <input type="number" id="sim-tiempo" min="0" step="1" placeholder="95">
-    </div>
-    <div class="form-group">
-      <label>Nota neta (se calcula: aciertos - errores/3)</label>
-      <input type="number" id="sim-nota" step="0.01" placeholder="Auto" readonly style="background:var(--surface2);color:var(--text2);">
-    </div>
-    <div class="form-group">
-      <label>Desglose por tema (opcional, formato libre)</label>
-      <textarea id="sim-desglose" rows="4" placeholder="T14: 2/5, T19: 1/3, T2: 4/5..."></textarea>
-    </div>
-    <div class="form-group">
-      <label>Notas</label>
-      <textarea id="sim-notas" rows="2" placeholder="Observaciones generales..."></textarea>
-    </div>
-    <div class="form-actions">
-      <button class="tb-btn" onclick="closeSimModal()">Cancelar</button>
-      <button class="tb-btn primary" onclick="saveSimulacro()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/* =================================================================
-   DATOS BASE — 40 temas
-   ================================================================= */
-const SEEDS = [
-  {id:"C1",block:"común",number:1,title:"Constitución Española y Estatuto de Autonomía de Madrid"},
-  {id:"C2",block:"común",number:2,title:"Bases de Régimen Local y Capitalidad de Madrid"},
-  {id:"C3",block:"común",number:3,title:"Haciendas Locales"},
-  {id:"C4",block:"común",number:4,title:"EBEP I — Personal, derechos y deberes"},
-  {id:"C5",block:"común",number:5,title:"EBEP II — Relación de servicio, situaciones y disciplinario"},
-  {id:"C6",block:"común",number:6,title:"Ley 39/2015 (LPAC)"},
-  {id:"C7",block:"común",number:7,title:"Igualdad e LGTBI"},
-  {id:"C8",block:"común",number:8,title:"Prevención de Riesgos Laborales"},
-  {id:"E1", block:"específico",number:1, title:"Teoría del fuego"},
-  {id:"E2", block:"específico",number:2, title:"Incendios de interior — Ventilación"},
-  {id:"E3", block:"específico",number:3, title:"Incendios de interior — Técnicas de intervención"},
-  {id:"E4", block:"específico",number:4, title:"Hidráulica"},
-  {id:"E5", block:"específico",number:5, title:"Incendios de vegetación"},
-  {id:"E6", block:"específico",number:6, title:"Trabajos verticales (I)"},
-  {id:"E7", block:"específico",number:7, title:"Trabajos verticales (II)"},
-  {id:"E8", block:"específico",number:8, title:"Rescate en accidentes de tráfico (I)"},
-  {id:"E9", block:"específico",number:9, title:"Rescate en accidentes de tráfico (II)"},
-  {id:"E10",block:"específico",number:10,title:"Rescate apícola, otras especies y ascensores"},
-  {id:"E11",block:"específico",number:11,title:"Edificaciones — Física, acciones, esfuerzos, materiales"},
-  {id:"E12",block:"específico",number:12,title:"Edificaciones — Sistemas constructivos y evolución histórica"},
-  {id:"E13",block:"específico",number:13,title:"Edificaciones — Elementos complementarios y patologías"},
-  {id:"E14",block:"específico",number:14,title:"Estabilización de sistemas constructivos y terrenos"},
-  {id:"E15",block:"específico",number:15,title:"Accesos forzados"},
-  {id:"E16",block:"específico",number:16,title:"Intervenciones en arbolado urbano"},
-  {id:"E17",block:"específico",number:17,title:"Riesgo NRBQ"},
-  {id:"E18",block:"específico",number:18,title:"Electricidad y riesgo eléctrico"},
-  {id:"E19",block:"específico",number:19,title:"Infraestructuras e instalaciones eléctricas en edificios"},
-  {id:"E20",block:"específico",number:20,title:"Instalaciones — ACS, calefacción y aparatos productores de calor"},
-  {id:"E21",block:"específico",number:21,title:"Instalaciones — Gas natural y GLP"},
-  {id:"E22",block:"específico",number:22,title:"Instalaciones — Agua fría, saneamiento y agua regenerada"},
-  {id:"E23",block:"específico",number:23,title:"Seguridad en trabajos verticales (NTP del INSST)"},
-  {id:"E24",block:"específico",number:24,title:"EPIs y equipos de protección respiratoria"},
-  {id:"E25",block:"específico",number:25,title:"Equipos de corte térmico y soldadura"},
-  {id:"E26",block:"específico",number:26,title:"Soporte vital básico"},
-  {id:"E27",block:"específico",number:27,title:"Paciente politraumatizado"},
-  {id:"E28",block:"específico",number:28,title:"Urgencias cardio, respi, neuro, psiquiátricas, gestacionales y AMV"},
-  {id:"E29",block:"específico",number:29,title:"Reglamento del Cuerpo de Bomberos de Madrid y Protección Civil"},
-  {id:"E30",block:"específico",number:30,title:"CTE DB-SI (I) — Propagación y evacuación"},
-  {id:"E31",block:"específico",number:31,title:"CTE DB-SI (II) — Protección, intervención y resistencia al fuego"},
-  {id:"E32",block:"específico",number:32,title:"Vehículos del SEIS de Madrid"},
-];
-
-/* =================================================================
-   REPASO ESPACIADO
-   ================================================================= */
-const INT_STD  = [1, 3, 7, 14, 21, 30];
-const INT_ROJO = [1, 2, 4, 7, 14, 21, 30];
-
-function getStatus(score) {
-  if (score === null || score === undefined) return "sin";
-  if (score < 6) return "rojo";
-  if (score < 8) return "amarillo";
-  return "verde";
-}
-function statusLabel(s) {
-  return {rojo:"Rojo",amarillo:"Amarillo",verde:"Verde",sin:"Sin empezar"}[s]||s;
-}
-function startedRojo(t) {
-  return t.studySessions.length > 0 && t.studySessions[0].score < 6;
-}
-function getIntervals(t) {
-  if (startedRojo(t)) {
-    const last = t.studySessions[t.studySessions.length - 1];
-    if (last && last.score >= 7) return INT_ROJO;
-  }
-  return INT_STD;
-}
-function recalcReview(t) {
-  if (t.studySessions.length === 0) {
-    t.nextReviewDate = null; t.intervalIndex = 0; t.status = "sin"; return;
-  }
-  const last = t.studySessions[t.studySessions.length - 1];
-  t.status = getStatus(last.score);
-  if (last.score < 7) t.intervalIndex = 0;
-  else if (t.studySessions.length > 1) {
-    t.intervalIndex = Math.min((t.intervalIndex||0) + 1, getIntervals(t).length - 1);
-  }
-  const intervals = getIntervals(t);
-  const idx = Math.min(t.intervalIndex||0, intervals.length - 1);
-  const d = new Date(last.date);
-  d.setDate(d.getDate() + intervals[idx]);
-  t.nextReviewDate = d.toISOString().slice(0, 10);
-}
-
-/* =================================================================
-   ESTADO — localStorage
-   ================================================================= */
-const SKEY = "studietto-scanetto";
-let data;
-
-function loadData() {
-  try {
-    const raw = localStorage.getItem(SKEY);
-    if (raw) {
-      data = JSON.parse(raw);
-      if (!data.simulacros) data.simulacros = [];
-      // ensure all seeds exist
-      const ids = new Set(data.topics.map(t=>t.id));
-      for (const s of SEEDS) {
-        if (!ids.has(s.id)) {
-          data.topics.push({...s, studySessions:[], nextReviewDate:null, status:"sin", intervalIndex:0});
+      /* --- Responsive --- */
+      @media (max-width: 640px) {
+        .app {
+          padding: 0 12px 80px;
+        }
+        .topbar {
+          padding: 14px 0;
+        }
+        .logo {
+          font-size: 0.9rem;
+        }
+        .tab {
+          padding: 10px 14px;
+          font-size: 0.65rem;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .topic-table {
+          font-size: 0.75rem;
+        }
+        .topic-table th,
+        .topic-table td {
+          padding: 8px 6px;
+        }
+        .card {
+          padding: 12px;
+          gap: 10px;
+        }
+        .fab {
+          width: 46px;
+          height: 46px;
+          font-size: 1.2rem;
+          bottom: 16px;
+          right: 16px;
+        }
+        .diag-bar-title {
+          display: none;
         }
       }
-      return;
-    }
-  } catch(e) { console.error(e); }
-  data = {
-    topics: SEEDS.map(s => ({...s, studySessions:[], nextReviewDate:null, status:"sin", intervalIndex:0})),
-    simulacros: [],
-    theme: "light",
-  };
-}
-function saveData() { localStorage.setItem(SKEY, JSON.stringify(data)); }
-function topicById(id) { return data.topics.find(t => t.id === id); }
 
-/* =================================================================
+      /* --- Empty state --- */
+      .empty-state {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--text2);
+        padding: 30px 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- ============ TOP BAR ============ -->
+      <div class="topbar">
+        <div class="logo">Studietto <span>Scanetto</span></div>
+        <div class="topbar-actions">
+          <button class="tb-btn" onclick="exportJSON()">Export</button>
+          <button
+            class="tb-btn"
+            onclick="document.getElementById('import-file').click()"
+          >
+            Import
+          </button>
+          <input
+            type="file"
+            id="import-file"
+            accept=".json"
+            style="display: none"
+            onchange="importJSON(event)"
+          />
+          <button class="tb-btn" id="theme-toggle" onclick="toggleTheme()">
+            Dark
+          </button>
+        </div>
+      </div>
+
+      <!-- ============ TABS ============ -->
+      <div class="tabs">
+        <button class="tab active" data-tab="hoy">Hoy</button>
+        <button class="tab" data-tab="temario">Temario</button>
+        <button class="tab" data-tab="simulacros">Simulacros</button>
+        <button class="tab" data-tab="stats">Estadisticas</button>
+      </div>
+
+      <!-- ============ HOY ============ -->
+      <div class="panel active" id="panel-hoy">
+        <div
+          style="
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+          "
+          id="today-label"
+        ></div>
+        <h2
+          style="
+            font-family: var(--mono);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+          "
+          id="today-header"
+        ></h2>
+        <div class="section">
+          <div class="section-head">
+            <h2>Repasos pendientes</h2>
+            <span class="badge" id="due-count">0</span>
+          </div>
+          <div id="due-list"></div>
+        </div>
+        <div class="section">
+          <div class="section-head"><h2>Proximos 3 dias</h2></div>
+          <div id="upcoming-list"></div>
+        </div>
+      </div>
+
+      <!-- ============ TEMARIO ============ -->
+      <div class="panel" id="panel-temario">
+        <div class="table-controls">
+          <select id="filter-status" onchange="renderTemario()">
+            <option value="all">Todos</option>
+            <option value="rojo">Rojo</option>
+            <option value="amarillo">Amarillo</option>
+            <option value="verde">Verde</option>
+            <option value="sin">Sin empezar</option>
+          </select>
+          <select id="filter-block" onchange="renderTemario()">
+            <option value="all">Ambos bloques</option>
+            <option value="común">Comun</option>
+            <option value="específico">Especifico</option>
+          </select>
+          <input
+            type="text"
+            id="filter-search"
+            placeholder="Buscar..."
+            oninput="renderTemario()"
+            style="flex: 1; min-width: 100px"
+          />
+        </div>
+        <div style="overflow-x: auto">
+          <table class="topic-table" id="topic-table">
+            <thead>
+              <tr>
+                <th data-sort="number">No<span class="sort-arrow"></span></th>
+                <th data-sort="title">
+                  Titulo<span class="sort-arrow"></span>
+                </th>
+                <th data-sort="lastScore">
+                  Ultimo<span class="sort-arrow"></span>
+                </th>
+                <th data-sort="nextReview">
+                  Prox. repaso<span class="sort-arrow"></span>
+                </th>
+                <th data-sort="status">
+                  Estado<span class="sort-arrow"></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="topic-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============ SIMULACROS ============ -->
+      <div class="panel" id="panel-simulacros">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+          "
+        >
+          <div
+            class="section-head"
+            style="margin-bottom: 0; border: none; padding: 0"
+          >
+            <h2>Simulacros</h2>
+            <span class="badge" id="sim-count">0</span>
+          </div>
+          <button class="btn-sm" onclick="openSimModal()">
+            + Nuevo Simulacro
+          </button>
+        </div>
+        <div class="chart-box" id="sim-chart-box">
+          <h3>Evolucion de simulacros</h3>
+          <svg id="sim-chart" width="100%" height="180"></svg>
+        </div>
+        <div id="sim-list"></div>
+      </div>
+
+      <!-- ============ ESTADISTICAS ============ -->
+      <div class="panel" id="panel-stats">
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="chart-box">
+          <h3>Nota media en el tiempo</h3>
+          <svg id="chart-svg" width="100%" height="200"></svg>
+          <div id="chart-empty" class="empty-state" style="display: none">
+            Registra al menos 2 sesiones para ver la grafica.
+          </div>
+        </div>
+        <div
+          class="stats-grid"
+          style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))"
+        >
+          <div class="stat-card">
+            <div class="stat-value" id="streak-value">0</div>
+            <div class="stat-label">Dias de racha</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="total-hours">0</div>
+            <div class="stat-label">Horas totales</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="total-sessions">0</div>
+            <div class="stat-label">Sesiones totales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FAB ============ -->
+    <button class="fab" onclick="openSessionModal()" title="Registrar sesion">
+      +
+    </button>
+
+    <!-- ============ MODAL: Sesion ============ -->
+    <div class="modal-overlay" id="session-modal">
+      <div class="modal">
+        <h2 id="modal-title">Registrar sesion</h2>
+        <div class="form-group">
+          <label>Tema</label>
+          <select id="m-topic"></select>
+        </div>
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="m-date" />
+        </div>
+        <div class="form-group">
+          <label>Puntuacion (0-10)</label>
+          <input
+            type="number"
+            id="m-score"
+            min="0"
+            max="10"
+            step="0.1"
+            placeholder="7.5"
+          />
+        </div>
+        <div class="form-group">
+          <label>Duracion (min, opcional)</label>
+          <input
+            type="number"
+            id="m-duration"
+            min="0"
+            step="1"
+            placeholder="90"
+          />
+        </div>
+        <div class="form-group">
+          <label>Notas (opcional)</label>
+          <textarea
+            id="m-notes"
+            placeholder="Fallos clave, observaciones..."
+          ></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="tb-btn" onclick="closeSessionModal()">Cancelar</button>
+          <button class="tb-btn primary" onclick="saveSession()">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MODAL: Detail ============ -->
+    <div
+      class="detail-overlay"
+      id="detail-overlay"
+      onclick="if (event.target === this) closeDetail();"
+    >
+      <div class="detail-panel">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+          "
+        >
+          <div>
+            <h2 id="detail-title"></h2>
+            <div class="detail-block-label" id="detail-block"></div>
+          </div>
+          <button class="tb-btn" onclick="closeDetail()">X</button>
+        </div>
+        <div class="detail-stats" id="detail-stats"></div>
+        <div style="margin-bottom: 14px">
+          <button
+            class="btn-sm"
+            onclick="openSessionModalForTopic(currentDetailTopic)"
+          >
+            + Registrar sesion
+          </button>
+        </div>
+        <div
+          style="
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text2);
+            margin-bottom: 8px;
+          "
+        >
+          Historial
+        </div>
+        <ul class="session-list" id="detail-sessions"></ul>
+      </div>
+    </div>
+
+    <!-- ============ MODAL: Simulacro ============ -->
+    <div class="modal-overlay" id="sim-modal">
+      <div class="modal" style="max-width: 560px">
+        <h2>Registrar simulacro</h2>
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="sim-date" />
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap">
+          <div class="form-group" style="flex: 1; min-width: 120px">
+            <label>Aciertos</label>
+            <input
+              type="number"
+              id="sim-aciertos"
+              min="0"
+              step="1"
+              placeholder="65"
+            />
+          </div>
+          <div class="form-group" style="flex: 1; min-width: 120px">
+            <label>Total preguntas</label>
+            <input
+              type="number"
+              id="sim-total"
+              min="1"
+              step="1"
+              placeholder="100"
+              value="100"
+            />
+          </div>
+          <div class="form-group" style="flex: 1; min-width: 120px">
+            <label>Errores (penalizan)</label>
+            <input
+              type="number"
+              id="sim-errores"
+              min="0"
+              step="1"
+              placeholder="15"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Blancos (sin contestar)</label>
+          <input
+            type="number"
+            id="sim-blancos"
+            min="0"
+            step="1"
+            placeholder="20"
+          />
+        </div>
+        <div class="form-group">
+          <label>Tiempo (minutos, opcional)</label>
+          <input
+            type="number"
+            id="sim-tiempo"
+            min="0"
+            step="1"
+            placeholder="95"
+          />
+        </div>
+        <div class="form-group">
+          <label>Nota neta (se calcula: aciertos - errores/3)</label>
+          <input
+            type="number"
+            id="sim-nota"
+            step="0.01"
+            placeholder="Auto"
+            readonly
+            style="background: var(--surface2); color: var(--text2)"
+          />
+        </div>
+        <div class="form-group">
+          <label>Desglose por tema (opcional, formato libre)</label>
+          <textarea
+            id="sim-desglose"
+            rows="4"
+            placeholder="T14: 2/5, T19: 1/3, T2: 4/5..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label>Notas</label>
+          <textarea
+            id="sim-notas"
+            rows="2"
+            placeholder="Observaciones generales..."
+          ></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="tb-btn" onclick="closeSimModal()">Cancelar</button>
+          <button class="tb-btn primary" onclick="saveSimulacro()">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* =================================================================
+   DATOS BASE — 40 temas
+   ================================================================= */
+      const SEEDS = [
+        {
+          id: "C1",
+          block: "común",
+          number: 1,
+          title: "Constitución Española y Estatuto de Autonomía de Madrid",
+        },
+        {
+          id: "C2",
+          block: "común",
+          number: 2,
+          title: "Bases de Régimen Local y Capitalidad de Madrid",
+        },
+        { id: "C3", block: "común", number: 3, title: "Haciendas Locales" },
+        {
+          id: "C4",
+          block: "común",
+          number: 4,
+          title: "EBEP I — Personal, derechos y deberes",
+        },
+        {
+          id: "C5",
+          block: "común",
+          number: 5,
+          title: "EBEP II — Relación de servicio, situaciones y disciplinario",
+        },
+        { id: "C6", block: "común", number: 6, title: "Ley 39/2015 (LPAC)" },
+        { id: "C7", block: "común", number: 7, title: "Igualdad e LGTBI" },
+        {
+          id: "C8",
+          block: "común",
+          number: 8,
+          title: "Prevención de Riesgos Laborales",
+        },
+        { id: "E1", block: "específico", number: 1, title: "Teoría del fuego" },
+        {
+          id: "E2",
+          block: "específico",
+          number: 2,
+          title: "Incendios de interior — Ventilación",
+        },
+        {
+          id: "E3",
+          block: "específico",
+          number: 3,
+          title: "Incendios de interior — Técnicas de intervención",
+        },
+        { id: "E4", block: "específico", number: 4, title: "Hidráulica" },
+        {
+          id: "E5",
+          block: "específico",
+          number: 5,
+          title: "Incendios de vegetación",
+        },
+        {
+          id: "E6",
+          block: "específico",
+          number: 6,
+          title: "Trabajos verticales (I)",
+        },
+        {
+          id: "E7",
+          block: "específico",
+          number: 7,
+          title: "Trabajos verticales (II)",
+        },
+        {
+          id: "E8",
+          block: "específico",
+          number: 8,
+          title: "Rescate en accidentes de tráfico (I)",
+        },
+        {
+          id: "E9",
+          block: "específico",
+          number: 9,
+          title: "Rescate en accidentes de tráfico (II)",
+        },
+        {
+          id: "E10",
+          block: "específico",
+          number: 10,
+          title: "Rescate apícola, otras especies y ascensores",
+        },
+        {
+          id: "E11",
+          block: "específico",
+          number: 11,
+          title: "Edificaciones — Física, acciones, esfuerzos, materiales",
+        },
+        {
+          id: "E12",
+          block: "específico",
+          number: 12,
+          title: "Edificaciones — Sistemas constructivos y evolución histórica",
+        },
+        {
+          id: "E13",
+          block: "específico",
+          number: 13,
+          title: "Edificaciones — Elementos complementarios y patologías",
+        },
+        {
+          id: "E14",
+          block: "específico",
+          number: 14,
+          title: "Estabilización de sistemas constructivos y terrenos",
+        },
+        {
+          id: "E15",
+          block: "específico",
+          number: 15,
+          title: "Accesos forzados",
+        },
+        {
+          id: "E16",
+          block: "específico",
+          number: 16,
+          title: "Intervenciones en arbolado urbano",
+        },
+        { id: "E17", block: "específico", number: 17, title: "Riesgo NRBQ" },
+        {
+          id: "E18",
+          block: "específico",
+          number: 18,
+          title: "Electricidad y riesgo eléctrico",
+        },
+        {
+          id: "E19",
+          block: "específico",
+          number: 19,
+          title: "Infraestructuras e instalaciones eléctricas en edificios",
+        },
+        {
+          id: "E20",
+          block: "específico",
+          number: 20,
+          title:
+            "Instalaciones — ACS, calefacción y aparatos productores de calor",
+        },
+        {
+          id: "E21",
+          block: "específico",
+          number: 21,
+          title: "Instalaciones — Gas natural y GLP",
+        },
+        {
+          id: "E22",
+          block: "específico",
+          number: 22,
+          title: "Instalaciones — Agua fría, saneamiento y agua regenerada",
+        },
+        {
+          id: "E23",
+          block: "específico",
+          number: 23,
+          title: "Seguridad en trabajos verticales (NTP del INSST)",
+        },
+        {
+          id: "E24",
+          block: "específico",
+          number: 24,
+          title: "EPIs y equipos de protección respiratoria",
+        },
+        {
+          id: "E25",
+          block: "específico",
+          number: 25,
+          title: "Equipos de corte térmico y soldadura",
+        },
+        {
+          id: "E26",
+          block: "específico",
+          number: 26,
+          title: "Soporte vital básico",
+        },
+        {
+          id: "E27",
+          block: "específico",
+          number: 27,
+          title: "Paciente politraumatizado",
+        },
+        {
+          id: "E28",
+          block: "específico",
+          number: 28,
+          title:
+            "Urgencias cardio, respi, neuro, psiquiátricas, gestacionales y AMV",
+        },
+        {
+          id: "E29",
+          block: "específico",
+          number: 29,
+          title:
+            "Reglamento del Cuerpo de Bomberos de Madrid y Protección Civil",
+        },
+        {
+          id: "E30",
+          block: "específico",
+          number: 30,
+          title: "CTE DB-SI (I) — Propagación y evacuación",
+        },
+        {
+          id: "E31",
+          block: "específico",
+          number: 31,
+          title:
+            "CTE DB-SI (II) — Protección, intervención y resistencia al fuego",
+        },
+        {
+          id: "E32",
+          block: "específico",
+          number: 32,
+          title: "Vehículos del SEIS de Madrid",
+        },
+      ];
+
+      /* =================================================================
+   REPASO ESPACIADO
+   ================================================================= */
+      const INT_STD = [1, 3, 7, 14, 21, 30];
+      const INT_ROJO = [1, 2, 4, 7, 14, 21, 30];
+
+      function getStatus(score) {
+        if (score === null || score === undefined) return "sin";
+        if (score < 6) return "rojo";
+        if (score < 8) return "amarillo";
+        return "verde";
+      }
+      function statusLabel(s) {
+        return (
+          {
+            rojo: "Rojo",
+            amarillo: "Amarillo",
+            verde: "Verde",
+            sin: "Sin empezar",
+          }[s] || s
+        );
+      }
+      function startedRojo(t) {
+        return t.studySessions.length > 0 && t.studySessions[0].score < 6;
+      }
+      function getIntervals(t) {
+        if (startedRojo(t)) {
+          const last = t.studySessions[t.studySessions.length - 1];
+          if (last && last.score >= 7) return INT_ROJO;
+        }
+        return INT_STD;
+      }
+      function recalcReview(t) {
+        if (t.studySessions.length === 0) {
+          t.nextReviewDate = null;
+          t.intervalIndex = 0;
+          t.status = "sin";
+          return;
+        }
+        const last = t.studySessions[t.studySessions.length - 1];
+        t.status = getStatus(last.score);
+        if (last.score < 7) t.intervalIndex = 0;
+        else if (t.studySessions.length > 1) {
+          t.intervalIndex = Math.min(
+            (t.intervalIndex || 0) + 1,
+            getIntervals(t).length - 1,
+          );
+        }
+        const intervals = getIntervals(t);
+        const idx = Math.min(t.intervalIndex || 0, intervals.length - 1);
+        const d = new Date(last.date);
+        d.setDate(d.getDate() + intervals[idx]);
+        t.nextReviewDate = d.toISOString().slice(0, 10);
+      }
+
+      /* =================================================================
+   ESTADO — localStorage
+   ================================================================= */
+      const SKEY = "studietto-scanetto";
+      let data;
+      function loadData() {
+        try {
+          const raw = localStorage.getItem(SKEY);
+          if (raw) {
+            data = JSON.parse(raw);
+            if (!data.simulacros) data.simulacros = [];
+            // ensure all seeds exist
+            const ids = new Set(data.topics.map((t) => t.id));
+            for (const s of SEEDS) {
+              if (!ids.has(s.id)) {
+                data.topics.push({
+                  ...s,
+                  studySessions: [],
+                  nextReviewDate: null,
+                  status: "sin",
+                  intervalIndex: 0,
+                });
+              }
+            }
+            return;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+        data = {
+          topics: SEEDS.map((s) => ({
+            ...s,
+            studySessions: [],
+            nextReviewDate: null,
+            status: "sin",
+            intervalIndex: 0,
+          })),
+          simulacros: [],
+          theme: "light",
+        };
+      }
+      function saveData() {
+        localStorage.setItem(SKEY, JSON.stringify(data));
+      }
+      function topicById(id) {
+        return data.topics.find((t) => t.id === id);
+      }
+
+      /* =================================================================
    UTILIDADES FECHA
    ================================================================= */
-function todayISO() { return new Date().toISOString().slice(0,10); }
-function daysDiff(a, b) { return Math.round((new Date(a)-new Date(b))/864e5); }
-function fmtShort(iso) { if(!iso)return"—"; const[y,m,d]=iso.split("-"); return`${d}/${m}`; }
-function fmtFull(iso) {
-  if(!iso)return"—";
-  return new Date(iso+"T12:00:00").toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"});
-}
-const WD=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-function todayFull() {
-  const d=new Date();
-  return `${WD[d.getDay()]} ${d.getDate()} de ${d.toLocaleDateString("es-ES",{month:"long"})} ${d.getFullYear()}`;
-}
-function lastScore(t) { return t.studySessions.length ? t.studySessions[t.studySessions.length-1].score : null; }
-function lastDate(t) { return t.studySessions.length ? t.studySessions[t.studySessions.length-1].date : null; }
-function escHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+      function todayISO() {
+        return new Date().toISOString().slice(0, 10);
+      }
+      function daysDiff(a, b) {
+        return Math.round((new Date(a) - new Date(b)) / 864e5);
+      }
+      function fmtShort(iso) {
+        if (!iso) return "—";
+        const [y, m, d] = iso.split("-");
+        return `${d}/${m}`;
+      }
+      function fmtFull(iso) {
+        if (!iso) return "—";
+        return new Date(iso + "T12:00:00").toLocaleDateString("es-ES", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+        });
+      }
+      const WD = [
+        "Domingo",
+        "Lunes",
+        "Martes",
+        "Miércoles",
+        "Jueves",
+        "Viernes",
+        "Sábado",
+      ];
+      function todayFull() {
+        const d = new Date();
+        return `${WD[d.getDay()]} ${d.getDate()} de ${d.toLocaleDateString("es-ES", { month: "long" })} ${d.getFullYear()}`;
+      }
+      function lastScore(t) {
+        return t.studySessions.length
+          ? t.studySessions[t.studySessions.length - 1].score
+          : null;
+      }
+      function lastDate(t) {
+        return t.studySessions.length
+          ? t.studySessions[t.studySessions.length - 1].date
+          : null;
+      }
+      function escHtml(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
 
-/* =================================================================
+      /* =================================================================
    RENDER — HOY
    ================================================================= */
-function renderHoy() {
-  document.getElementById("today-label").textContent = todayISO();
-  document.getElementById("today-header").textContent = todayFull();
-  const today = todayISO();
+      function renderHoy() {
+        document.getElementById("today-label").textContent = todayISO();
+        document.getElementById("today-header").textContent = todayFull();
+        const today = todayISO();
 
-  // Due
-  const due = data.topics.filter(t => t.nextReviewDate && t.nextReviewDate <= today)
-    .sort((a,b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
-  document.getElementById("due-count").textContent = due.length;
-  const dueEl = document.getElementById("due-list");
-  if (!due.length) {
-    dueEl.innerHTML = '<div class="empty-state">Sin repasos pendientes. Buen momento para avanzar temas nuevos.</div>';
-  } else {
-    dueEl.innerHTML = due.map(t => {
-      const over = daysDiff(today, t.nextReviewDate);
-      const overTxt = over > 0 ? `<span class="overdue">${over}d retraso</span>` : '<span style="color:var(--verde)">hoy</span>';
-      return `<div class="card" onclick="openDetail('${t.id}')">
+        // Due
+        const due = data.topics
+          .filter((t) => t.nextReviewDate && t.nextReviewDate <= today)
+          .sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
+        document.getElementById("due-count").textContent = due.length;
+        const dueEl = document.getElementById("due-list");
+        if (!due.length) {
+          dueEl.innerHTML =
+            '<div class="empty-state">Sin repasos pendientes. Buen momento para avanzar temas nuevos.</div>';
+        } else {
+          dueEl.innerHTML = due
+            .map((t) => {
+              const over = daysDiff(today, t.nextReviewDate);
+              const overTxt =
+                over > 0
+                  ? `<span class="overdue">${over}d retraso</span>`
+                  : '<span style="color:var(--verde)">hoy</span>';
+              return `<div class="card" onclick="openDetail('${t.id}')">
         <span class="dot dot-${t.status}"></span>
         <span class="card-id">${t.id}</span>
         <span class="card-title">${t.title}</span>
         <div class="card-meta">${overTxt}</div>
         <button class="btn-sm" onclick="event.stopPropagation();openSessionModalForTopic('${t.id}')">Registrar</button>
       </div>`;
-    }).join("");
-  }
+            })
+            .join("");
+        }
 
-  // Upcoming 3 days
-  const d3 = new Date(); d3.setDate(d3.getDate()+3);
-  const d3iso = d3.toISOString().slice(0,10);
-  const up = data.topics.filter(t => t.nextReviewDate && t.nextReviewDate > today && t.nextReviewDate <= d3iso)
-    .sort((a,b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
-  const upEl = document.getElementById("upcoming-list");
-  if (!up.length) {
-    upEl.innerHTML = '<div class="empty-state">Nada en los proximos 3 dias.</div>';
-  } else {
-    upEl.innerHTML = up.map(t => {
-      const diff = daysDiff(t.nextReviewDate, today);
-      const when = diff === 1 ? "manana" : `en ${diff} dias`;
-      return `<div class="card" onclick="openDetail('${t.id}')" style="opacity:.65;">
+        // Upcoming 3 days
+        const d3 = new Date();
+        d3.setDate(d3.getDate() + 3);
+        const d3iso = d3.toISOString().slice(0, 10);
+        const up = data.topics
+          .filter(
+            (t) =>
+              t.nextReviewDate &&
+              t.nextReviewDate > today &&
+              t.nextReviewDate <= d3iso,
+          )
+          .sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
+        const upEl = document.getElementById("upcoming-list");
+        if (!up.length) {
+          upEl.innerHTML =
+            '<div class="empty-state">Nada en los proximos 3 dias.</div>';
+        } else {
+          upEl.innerHTML = up
+            .map((t) => {
+              const diff = daysDiff(t.nextReviewDate, today);
+              const when = diff === 1 ? "manana" : `en ${diff} dias`;
+              return `<div class="card" onclick="openDetail('${t.id}')" style="opacity:.65;">
         <span class="dot dot-${t.status}"></span>
         <span class="card-id">${t.id}</span>
         <span class="card-title" style="font-size:.85rem;">${t.title}</span>
         <div class="card-meta"><span>${when} · ${fmtFull(t.nextReviewDate)}</span></div>
       </div>`;
-    }).join("");
-  }
-}
+            })
+            .join("");
+        }
+      }
 
-/* =================================================================
+      /* =================================================================
    RENDER — TEMARIO
    ================================================================= */
-let sortCol = "number", sortAsc = true;
+      let sortCol = "number",
+        sortAsc = true;
 
-function renderTemario() {
-  const fStatus = document.getElementById("filter-status").value;
-  const fBlock = document.getElementById("filter-block").value;
-  const search = document.getElementById("filter-search").value.toLowerCase().trim();
+      function renderTemario() {
+        const fStatus = document.getElementById("filter-status").value;
+        const fBlock = document.getElementById("filter-block").value;
+        const search = document
+          .getElementById("filter-search")
+          .value.toLowerCase()
+          .trim();
 
-  let list = data.topics.filter(t => {
-    if (fStatus !== "all" && t.status !== fStatus) return false;
-    if (fBlock !== "all" && t.block !== fBlock) return false;
-    if (search && !t.title.toLowerCase().includes(search) && !t.id.toLowerCase().includes(search)) return false;
-    return true;
-  });
+        let list = data.topics.filter((t) => {
+          if (fStatus !== "all" && t.status !== fStatus) return false;
+          if (fBlock !== "all" && t.block !== fBlock) return false;
+          if (
+            search &&
+            !t.title.toLowerCase().includes(search) &&
+            !t.id.toLowerCase().includes(search)
+          )
+            return false;
+          return true;
+        });
 
-  list.sort((a, b) => {
-    let va, vb;
-    switch(sortCol) {
-      case "number":
-        if (a.block !== b.block) return a.block === "común" ? -1 : 1;
-        va = a.number; vb = b.number; break;
-      case "title": va = a.title; vb = b.title; break;
-      case "lastScore": va = lastScore(a) ?? -1; vb = lastScore(b) ?? -1; break;
-      case "nextReview": va = a.nextReviewDate||"9999"; vb = b.nextReviewDate||"9999"; break;
-      case "status":
-        const o={rojo:0,amarillo:1,verde:2,sin:3};
-        va=o[a.status]??3; vb=o[b.status]??3; break;
-      default: va=a.number; vb=b.number;
-    }
-    if (va < vb) return sortAsc ? -1 : 1;
-    if (va > vb) return sortAsc ? 1 : -1;
-    return 0;
-  });
+        list.sort((a, b) => {
+          let va, vb;
+          switch (sortCol) {
+            case "number":
+              if (a.block !== b.block) return a.block === "común" ? -1 : 1;
+              va = a.number;
+              vb = b.number;
+              break;
+            case "title":
+              va = a.title;
+              vb = b.title;
+              break;
+            case "lastScore":
+              va = lastScore(a) ?? -1;
+              vb = lastScore(b) ?? -1;
+              break;
+            case "nextReview":
+              va = a.nextReviewDate || "9999";
+              vb = b.nextReviewDate || "9999";
+              break;
+            case "status":
+              const o = { rojo: 0, amarillo: 1, verde: 2, sin: 3 };
+              va = o[a.status] ?? 3;
+              vb = o[b.status] ?? 3;
+              break;
+            default:
+              va = a.number;
+              vb = b.number;
+          }
+          if (va < vb) return sortAsc ? -1 : 1;
+          if (va > vb) return sortAsc ? 1 : -1;
+          return 0;
+        });
 
-  document.querySelectorAll(".topic-table th").forEach(th => {
-    const arr = th.querySelector(".sort-arrow");
-    if (arr) arr.textContent = th.dataset.sort === sortCol ? (sortAsc ? " ↑" : " ↓") : "";
-  });
+        document.querySelectorAll(".topic-table th").forEach((th) => {
+          const arr = th.querySelector(".sort-arrow");
+          if (arr)
+            arr.textContent =
+              th.dataset.sort === sortCol ? (sortAsc ? " ↑" : " ↓") : "";
+        });
 
-  const tbody = document.getElementById("topic-tbody");
-  let html = "", curBlock = "";
-  for (const t of list) {
-    if (t.block !== curBlock && fBlock === "all" && !search) {
-      curBlock = t.block;
-      html += `<tr class="block-header"><td colspan="5">${curBlock==="común"?"Bloque I — Comun":"Bloque II — Especifico"}</td></tr>`;
-    }
-    const ls = lastScore(t);
-    html += `<tr onclick="openDetail('${t.id}')">
+        const tbody = document.getElementById("topic-tbody");
+        let html = "",
+          curBlock = "";
+        for (const t of list) {
+          if (t.block !== curBlock && fBlock === "all" && !search) {
+            curBlock = t.block;
+            html += `<tr class="block-header"><td colspan="5">${curBlock === "común" ? "Bloque I — Comun" : "Bloque II — Especifico"}</td></tr>`;
+          }
+          const ls = lastScore(t);
+          html += `<tr onclick="openDetail('${t.id}')">
       <td style="font-family:var(--mono);font-weight:700;font-size:.75rem;">${t.id}</td>
       <td>${t.title}</td>
       <td style="font-family:var(--mono);font-size:.8rem;font-weight:700;">${ls !== null ? ls.toFixed(1) : "—"}</td>
       <td style="font-size:.8rem;">${t.nextReviewDate ? fmtFull(t.nextReviewDate) : "—"}</td>
       <td><span class="pill pill-${t.status}">${statusLabel(t.status)}</span></td>
     </tr>`;
-  }
-  tbody.innerHTML = html;
-}
+        }
+        tbody.innerHTML = html;
+      }
 
-document.querySelectorAll(".topic-table th[data-sort]").forEach(th => {
-  th.addEventListener("click", () => {
-    const col = th.dataset.sort;
-    if (sortCol === col) sortAsc = !sortAsc; else { sortCol = col; sortAsc = true; }
-    renderTemario();
-  });
-});
+      document.querySelectorAll(".topic-table th[data-sort]").forEach((th) => {
+        th.addEventListener("click", () => {
+          const col = th.dataset.sort;
+          if (sortCol === col) sortAsc = !sortAsc;
+          else {
+            sortCol = col;
+            sortAsc = true;
+          }
+          renderTemario();
+        });
+      });
 
-/* =================================================================
+      /* =================================================================
    RENDER — SIMULACROS
    ================================================================= */
-function renderSimulacros() {
-  const sims = data.simulacros || [];
-  document.getElementById("sim-count").textContent = sims.length;
-  const list = document.getElementById("sim-list");
+      function renderSimulacros() {
+        const sims = data.simulacros || [];
+        document.getElementById("sim-count").textContent = sims.length;
+        const list = document.getElementById("sim-list");
 
-  if (!sims.length) {
-    list.innerHTML = '<div class="empty-state">Sin simulacros registrados.</div>';
-    document.getElementById("sim-chart-box").style.display = "none";
-    return;
-  }
-  document.getElementById("sim-chart-box").style.display = "block";
+        if (!sims.length) {
+          list.innerHTML =
+            '<div class="empty-state">Sin simulacros registrados.</div>';
+          document.getElementById("sim-chart-box").style.display = "none";
+          return;
+        }
+        document.getElementById("sim-chart-box").style.display = "block";
 
-  const sorted = [...sims].sort((a,b) => b.date.localeCompare(a.date));
-  list.innerHTML = sorted.map((s, i) => {
-    const pct = s.totalPreguntas ? ((s.notaNeta / s.totalPreguntas) * 100).toFixed(1) : "—";
-    return `<div class="sim-card">
+        const sorted = [...sims].sort((a, b) => b.date.localeCompare(a.date));
+        list.innerHTML = sorted
+          .map((s, i) => {
+            const pct = s.totalPreguntas
+              ? ((s.notaNeta / s.totalPreguntas) * 100).toFixed(1)
+              : "—";
+            return `<div class="sim-card">
       <div class="sim-header">
         <div>
           <div class="sim-date">${fmtFull(s.date)}</div>
-          <div class="sim-meta">${s.aciertos}/${s.totalPreguntas} aciertos · ${s.errores} errores · ${s.blancos} blancos${s.tiempo ? ` · ${s.tiempo} min` : ''}</div>
+          <div class="sim-meta">${s.aciertos}/${s.totalPreguntas} aciertos · ${s.errores} errores · ${s.blancos} blancos${s.tiempo ? ` · ${s.tiempo} min` : ""}</div>
         </div>
         <div style="text-align:right;">
-          <div class="sim-score" style="color:${s.notaNeta/s.totalPreguntas>=.65?'var(--verde)':s.notaNeta/s.totalPreguntas>=.5?'var(--amarillo)':'var(--rojo)'}">${s.notaNeta.toFixed(2)}</div>
+          <div class="sim-score" style="color:${s.notaNeta / s.totalPreguntas >= 0.65 ? "var(--verde)" : s.notaNeta / s.totalPreguntas >= 0.5 ? "var(--amarillo)" : "var(--rojo)"}">${s.notaNeta.toFixed(2)}</div>
           <div class="sim-meta">${pct}% neto</div>
         </div>
         <button class="session-delete" onclick="deleteSimulacro(${data.simulacros.indexOf(s)})" title="Eliminar">✕</button>
       </div>
-      ${s.desglose ? `<div style="font-size:.8rem;color:var(--text2);margin-top:6px;">${escHtml(s.desglose)}</div>` : ''}
-      ${s.notas ? `<div style="font-size:.8rem;color:var(--text2);font-style:italic;margin-top:4px;">${escHtml(s.notas)}</div>` : ''}
+      ${s.desglose ? `<div style="font-size:.8rem;color:var(--text2);margin-top:6px;">${escHtml(s.desglose)}</div>` : ""}
+      ${s.notas ? `<div style="font-size:.8rem;color:var(--text2);font-style:italic;margin-top:4px;">${escHtml(s.notas)}</div>` : ""}
     </div>`;
-  }).join("");
+          })
+          .join("");
 
-  // Chart
-  renderSimChart();
-}
+        // Chart
+        renderSimChart();
+      }
 
-function renderSimChart() {
-  const svg = document.getElementById("sim-chart");
-  const sims = [...(data.simulacros||[])].sort((a,b)=>a.date.localeCompare(b.date));
-  if (sims.length < 2) { svg.innerHTML = ""; return; }
+      function renderSimChart() {
+        const svg = document.getElementById("sim-chart");
+        const sims = [...(data.simulacros || [])].sort((a, b) =>
+          a.date.localeCompare(b.date),
+        );
+        if (sims.length < 2) {
+          svg.innerHTML = "";
+          return;
+        }
 
-  const W = svg.clientWidth || 800, H = 180;
-  const pad = {top:15, right:15, bottom:30, left:40};
-  const gW = W-pad.left-pad.right, gH = H-pad.top-pad.bottom;
-  const maxVal = Math.max(...sims.map(s=>s.totalPreguntas));
-  const yScale = v => pad.top + gH - (v/maxVal)*gH;
-  const xScale = i => pad.left + (i/(sims.length-1))*gW;
+        const W = svg.clientWidth || 800,
+          H = 180;
+        const pad = { top: 15, right: 15, bottom: 30, left: 40 };
+        const gW = W - pad.left - pad.right,
+          gH = H - pad.top - pad.bottom;
+        const maxVal = Math.max(...sims.map((s) => s.totalPreguntas));
+        const yScale = (v) => pad.top + gH - (v / maxVal) * gH;
+        const xScale = (i) => pad.left + (i / (sims.length - 1)) * gW;
 
-  let svg_c = "";
-  // grid
-  for (let v = 0; v <= maxVal; v += Math.ceil(maxVal/5)) {
-    const y = yScale(v);
-    svg_c += `<line x1="${pad.left}" y1="${y}" x2="${W-pad.right}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`;
-    svg_c += `<text x="${pad.left-6}" y="${y+4}" text-anchor="end" fill="var(--text2)" font-size="10" font-family="var(--mono)">${v}</text>`;
-  }
-  // line + points
-  const path = sims.map((s,i)=>`${i?'L':'M'}${xScale(i)},${yScale(s.notaNeta)}`).join(" ");
-  svg_c += `<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
-  sims.forEach((s,i) => {
-    svg_c += `<circle cx="${xScale(i)}" cy="${yScale(s.notaNeta)}" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`;
-    svg_c += `<text x="${xScale(i)}" y="${H-6}" text-anchor="middle" fill="var(--text2)" font-size="9" font-family="var(--mono)">${fmtShort(s.date)}</text>`;
-  });
-  svg.innerHTML = svg_c;
-}
+        let svg_c = "";
+        // grid
+        for (let v = 0; v <= maxVal; v += Math.ceil(maxVal / 5)) {
+          const y = yScale(v);
+          svg_c += `<line x1="${pad.left}" y1="${y}" x2="${W - pad.right}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`;
+          svg_c += `<text x="${pad.left - 6}" y="${y + 4}" text-anchor="end" fill="var(--text2)" font-size="10" font-family="var(--mono)">${v}</text>`;
+        }
+        // line + points
+        const path = sims
+          .map((s, i) => `${i ? "L" : "M"}${xScale(i)},${yScale(s.notaNeta)}`)
+          .join(" ");
+        svg_c += `<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+        sims.forEach((s, i) => {
+          svg_c += `<circle cx="${xScale(i)}" cy="${yScale(s.notaNeta)}" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`;
+          svg_c += `<text x="${xScale(i)}" y="${H - 6}" text-anchor="middle" fill="var(--text2)" font-size="9" font-family="var(--mono)">${fmtShort(s.date)}</text>`;
+        });
+        svg.innerHTML = svg_c;
+      }
 
-function deleteSimulacro(idx) {
-  if (!confirm("¿Eliminar este simulacro?")) return;
-  data.simulacros.splice(idx, 1);
-  saveData(); renderSimulacros();
-}
+      function deleteSimulacro(idx) {
+        if (!confirm("¿Eliminar este simulacro?")) return;
+        data.simulacros.splice(idx, 1);
+        saveData();
+        renderSimulacros();
+      }
 
-/* =================================================================
+      /* =================================================================
    RENDER — ESTADISTICAS
    ================================================================= */
-function renderStats() {
-  const counts = {rojo:0, amarillo:0, verde:0, sin:0};
-  let scoreSum=0, scoreCount=0, totalMin=0, totalSessions=0;
-  for (const t of data.topics) {
-    counts[t.status] = (counts[t.status]||0) + 1;
-    const ls = lastScore(t);
-    if (ls !== null) { scoreSum += ls; scoreCount++; }
-    for (const s of t.studySessions) {
-      totalSessions++;
-      if (s.durationMin) totalMin += s.durationMin;
-    }
-  }
-  const avg = scoreCount > 0 ? (scoreSum/scoreCount).toFixed(1) : "—";
+      function renderStats() {
+        const counts = { rojo: 0, amarillo: 0, verde: 0, sin: 0 };
+        let scoreSum = 0,
+          scoreCount = 0,
+          totalMin = 0,
+          totalSessions = 0;
+        for (const t of data.topics) {
+          counts[t.status] = (counts[t.status] || 0) + 1;
+          const ls = lastScore(t);
+          if (ls !== null) {
+            scoreSum += ls;
+            scoreCount++;
+          }
+          for (const s of t.studySessions) {
+            totalSessions++;
+            if (s.durationMin) totalMin += s.durationMin;
+          }
+        }
+        const avg = scoreCount > 0 ? (scoreSum / scoreCount).toFixed(1) : "—";
 
-  document.getElementById("stats-grid").innerHTML = `
+        document.getElementById("stats-grid").innerHTML = `
     <div class="stat-card"><div class="stat-value" style="color:var(--rojo)">${counts.rojo}</div><div class="stat-label">Rojo (&lt;6)</div></div>
     <div class="stat-card"><div class="stat-value" style="color:var(--amarillo)">${counts.amarillo}</div><div class="stat-label">Amarillo (6-8)</div></div>
     <div class="stat-card"><div class="stat-value" style="color:var(--verde)">${counts.verde}</div><div class="stat-label">Verde (≥8)</div></div>
@@ -915,269 +1744,395 @@ function renderStats() {
     <div class="stat-card"><div class="stat-value">${scoreCount}/${data.topics.length}</div><div class="stat-label">Iniciados</div></div>
   `;
 
-  document.getElementById("streak-value").textContent = calcStreak();
-  document.getElementById("total-hours").textContent = (totalMin/60).toFixed(1);
-  document.getElementById("total-sessions").textContent = totalSessions;
-  renderMainChart();
-}
+        document.getElementById("streak-value").textContent = calcStreak();
+        document.getElementById("total-hours").textContent = (
+          totalMin / 60
+        ).toFixed(1);
+        document.getElementById("total-sessions").textContent = totalSessions;
+        renderMainChart();
+      }
 
-function calcStreak() {
-  const dates = new Set();
-  for (const t of data.topics) for (const s of t.studySessions) dates.add(s.date);
-  if (!dates.size) return 0;
-  const today = todayISO();
-  let streak = 0, check = new Date(today+"T12:00:00");
-  if (!dates.has(today)) check.setDate(check.getDate()-1);
-  while (dates.has(check.toISOString().slice(0,10))) { streak++; check.setDate(check.getDate()-1); }
-  return streak;
-}
+      function calcStreak() {
+        const dates = new Set();
+        for (const t of data.topics)
+          for (const s of t.studySessions) dates.add(s.date);
+        if (!dates.size) return 0;
+        const today = todayISO();
+        let streak = 0,
+          check = new Date(today + "T12:00:00");
+        if (!dates.has(today)) check.setDate(check.getDate() - 1);
+        while (dates.has(check.toISOString().slice(0, 10))) {
+          streak++;
+          check.setDate(check.getDate() - 1);
+        }
+        return streak;
+      }
 
-function renderMainChart() {
-  const svg = document.getElementById("chart-svg");
-  const empty = document.getElementById("chart-empty");
-  const byDate = {};
-  for (const t of data.topics) for (const s of t.studySessions) {
-    if (!byDate[s.date]) byDate[s.date] = [];
-    byDate[s.date].push(s.score);
-  }
-  const dates = Object.keys(byDate).sort();
-  if (dates.length < 2) { svg.innerHTML=""; empty.style.display="block"; return; }
-  empty.style.display = "none";
+      function renderMainChart() {
+        const svg = document.getElementById("chart-svg");
+        const empty = document.getElementById("chart-empty");
+        const byDate = {};
+        for (const t of data.topics)
+          for (const s of t.studySessions) {
+            if (!byDate[s.date]) byDate[s.date] = [];
+            byDate[s.date].push(s.score);
+          }
+        const dates = Object.keys(byDate).sort();
+        if (dates.length < 2) {
+          svg.innerHTML = "";
+          empty.style.display = "block";
+          return;
+        }
+        empty.style.display = "none";
 
-  const pts = dates.map(d => ({date:d, avg:byDate[d].reduce((a,b)=>a+b,0)/byDate[d].length}));
-  let cumS=0, cumC=0;
-  const cum = pts.map(p => { cumS+=p.avg*byDate[p.date].length; cumC+=byDate[p.date].length; return{date:p.date,avg:cumS/cumC}; });
+        const pts = dates.map((d) => ({
+          date: d,
+          avg: byDate[d].reduce((a, b) => a + b, 0) / byDate[d].length,
+        }));
+        let cumS = 0,
+          cumC = 0;
+        const cum = pts.map((p) => {
+          cumS += p.avg * byDate[p.date].length;
+          cumC += byDate[p.date].length;
+          return { date: p.date, avg: cumS / cumC };
+        });
 
-  const W=svg.clientWidth||800, H=200;
-  const pad={top:15,right:15,bottom:30,left:40};
-  const gW=W-pad.left-pad.right, gH=H-pad.top-pad.bottom;
-  const xS=i=>pad.left+(i/(pts.length-1))*gW;
-  const yS=v=>pad.top+gH-((v)/10)*gH;
+        const W = svg.clientWidth || 800,
+          H = 200;
+        const pad = { top: 15, right: 15, bottom: 30, left: 40 };
+        const gW = W - pad.left - pad.right,
+          gH = H - pad.top - pad.bottom;
+        const xS = (i) => pad.left + (i / (pts.length - 1)) * gW;
+        const yS = (v) => pad.top + gH - (v / 10) * gH;
 
-  let c="";
-  for(let v=0;v<=10;v+=2){
-    c+=`<line x1="${pad.left}" y1="${yS(v)}" x2="${W-pad.right}" y2="${yS(v)}" stroke="var(--border)" stroke-width="1"/>`;
-    c+=`<text x="${pad.left-6}" y="${yS(v)+4}" text-anchor="end" fill="var(--text2)" font-size="10" font-family="var(--mono)">${v}</text>`;
-  }
-  c+=`<line x1="${pad.left}" y1="${yS(6)}" x2="${W-pad.right}" y2="${yS(6)}" stroke="var(--rojo)" stroke-width="1" stroke-dasharray="4 3" opacity=".3"/>`;
-  c+=`<line x1="${pad.left}" y1="${yS(8)}" x2="${W-pad.right}" y2="${yS(8)}" stroke="var(--verde)" stroke-width="1" stroke-dasharray="4 3" opacity=".3"/>`;
+        let c = "";
+        for (let v = 0; v <= 10; v += 2) {
+          c += `<line x1="${pad.left}" y1="${yS(v)}" x2="${W - pad.right}" y2="${yS(v)}" stroke="var(--border)" stroke-width="1"/>`;
+          c += `<text x="${pad.left - 6}" y="${yS(v) + 4}" text-anchor="end" fill="var(--text2)" font-size="10" font-family="var(--mono)">${v}</text>`;
+        }
+        c += `<line x1="${pad.left}" y1="${yS(6)}" x2="${W - pad.right}" y2="${yS(6)}" stroke="var(--rojo)" stroke-width="1" stroke-dasharray="4 3" opacity=".3"/>`;
+        c += `<line x1="${pad.left}" y1="${yS(8)}" x2="${W - pad.right}" y2="${yS(8)}" stroke="var(--verde)" stroke-width="1" stroke-dasharray="4 3" opacity=".3"/>`;
 
-  // daily line
-  c+=`<path d="${pts.map((p,i)=>`${i?'L':'M'}${xS(i)},${yS(p.avg)}`).join(" ")}" fill="none" stroke="var(--text2)" stroke-width="1" opacity=".35"/>`;
-  // cumulative
-  c+=`<path d="${cum.map((p,i)=>`${i?'L':'M'}${xS(i)},${yS(p.avg)}`).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
-  // dots
-  pts.forEach((p,i) => {
-    const col = p.avg>=8?'var(--verde)':p.avg>=6?'var(--amarillo)':'var(--rojo)';
-    c+=`<circle cx="${xS(i)}" cy="${yS(p.avg)}" r="3.5" fill="${col}" stroke="var(--surface)" stroke-width="2"/>`;
-  });
-  const step = Math.max(1, Math.floor(pts.length/8));
-  pts.forEach((p,i) => {
-    if(i%step===0||i===pts.length-1) c+=`<text x="${xS(i)}" y="${H-6}" text-anchor="middle" fill="var(--text2)" font-size="9" font-family="var(--mono)">${fmtShort(p.date)}</text>`;
-  });
-  svg.innerHTML = c;
-}
+        // daily line
+        c += `<path d="${pts.map((p, i) => `${i ? "L" : "M"}${xS(i)},${yS(p.avg)}`).join(" ")}" fill="none" stroke="var(--text2)" stroke-width="1" opacity=".35"/>`;
+        // cumulative
+        c += `<path d="${cum.map((p, i) => `${i ? "L" : "M"}${xS(i)},${yS(p.avg)}`).join(" ")}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+        // dots
+        pts.forEach((p, i) => {
+          const col =
+            p.avg >= 8
+              ? "var(--verde)"
+              : p.avg >= 6
+                ? "var(--amarillo)"
+                : "var(--rojo)";
+          c += `<circle cx="${xS(i)}" cy="${yS(p.avg)}" r="3.5" fill="${col}" stroke="var(--surface)" stroke-width="2"/>`;
+        });
+        const step = Math.max(1, Math.floor(pts.length / 8));
+        pts.forEach((p, i) => {
+          if (i % step === 0 || i === pts.length - 1)
+            c += `<text x="${xS(i)}" y="${H - 6}" text-anchor="middle" fill="var(--text2)" font-size="9" font-family="var(--mono)">${fmtShort(p.date)}</text>`;
+        });
+        svg.innerHTML = c;
+      }
 
-/* =================================================================
+      /* =================================================================
    MODALES — Sesion
    ================================================================= */
-function populateTopicSelect() {
-  const sel = document.getElementById("m-topic");
-  let h = '<optgroup label="Bloque I — Comun">';
-  for (const t of data.topics.filter(t=>t.block==="común")) h += `<option value="${t.id}">C${t.number}. ${t.title}</option>`;
-  h += '</optgroup><optgroup label="Bloque II — Especifico">';
-  for (const t of data.topics.filter(t=>t.block==="específico")) h += `<option value="${t.id}">E${t.number}. ${t.title}</option>`;
-  h += '</optgroup>';
-  sel.innerHTML = h;
-}
-function openSessionModal() {
-  populateTopicSelect();
-  document.getElementById("m-date").value = todayISO();
-  document.getElementById("m-score").value = "";
-  document.getElementById("m-duration").value = "";
-  document.getElementById("m-notes").value = "";
-  document.getElementById("modal-title").textContent = "Registrar sesion";
-  document.getElementById("session-modal").classList.add("open");
-  document.getElementById("m-score").focus();
-}
-function openSessionModalForTopic(id) { openSessionModal(); document.getElementById("m-topic").value = id; }
-function closeSessionModal() { document.getElementById("session-modal").classList.remove("open"); }
+      function populateTopicSelect() {
+        const sel = document.getElementById("m-topic");
+        let h = '<optgroup label="Bloque I — Comun">';
+        for (const t of data.topics.filter((t) => t.block === "común"))
+          h += `<option value="${t.id}">C${t.number}. ${t.title}</option>`;
+        h += '</optgroup><optgroup label="Bloque II — Especifico">';
+        for (const t of data.topics.filter((t) => t.block === "específico"))
+          h += `<option value="${t.id}">E${t.number}. ${t.title}</option>`;
+        h += "</optgroup>";
+        sel.innerHTML = h;
+      }
+      function openSessionModal() {
+        populateTopicSelect();
+        document.getElementById("m-date").value = todayISO();
+        document.getElementById("m-score").value = "";
+        document.getElementById("m-duration").value = "";
+        document.getElementById("m-notes").value = "";
+        document.getElementById("modal-title").textContent = "Registrar sesion";
+        document.getElementById("session-modal").classList.add("open");
+        document.getElementById("m-score").focus();
+      }
+      function openSessionModalForTopic(id) {
+        openSessionModal();
+        document.getElementById("m-topic").value = id;
+      }
+      function closeSessionModal() {
+        document.getElementById("session-modal").classList.remove("open");
+      }
 
-function saveSession() {
-  const id = document.getElementById("m-topic").value;
-  const date = document.getElementById("m-date").value;
-  const scoreRaw = document.getElementById("m-score").value;
-  const durRaw = document.getElementById("m-duration").value;
-  const notes = document.getElementById("m-notes").value.trim();
-  if (!date || scoreRaw === "") { alert("Fecha y puntuacion son obligatorios."); return; }
-  const score = parseFloat(scoreRaw);
-  if (isNaN(score) || score < 0 || score > 10) { alert("Puntuacion entre 0 y 10."); return; }
-  const t = topicById(id); if (!t) return;
-  const session = { date, score: Math.round(score*10)/10 };
-  if (durRaw) session.durationMin = parseInt(durRaw);
-  if (notes) session.notes = notes;
-  t.studySessions.push(session);
-  t.studySessions.sort((a,b) => a.date.localeCompare(b.date));
-  recalcReview(t);
-  saveData(); closeSessionModal(); renderAll();
-  if (currentDetailTopic === id) openDetail(id);
-}
+      function saveSession() {
+        const id = document.getElementById("m-topic").value;
+        const date = document.getElementById("m-date").value;
+        const scoreRaw = document.getElementById("m-score").value;
+        const durRaw = document.getElementById("m-duration").value;
+        const notes = document.getElementById("m-notes").value.trim();
+        if (!date || scoreRaw === "") {
+          alert("Fecha y puntuacion son obligatorios.");
+          return;
+        }
+        const score = parseFloat(scoreRaw);
+        if (isNaN(score) || score < 0 || score > 10) {
+          alert("Puntuacion entre 0 y 10.");
+          return;
+        }
+        const t = topicById(id);
+        if (!t) return;
+        const session = { date, score: Math.round(score * 10) / 10 };
+        if (durRaw) session.durationMin = parseInt(durRaw);
+        if (notes) session.notes = notes;
+        t.studySessions.push(session);
+        t.studySessions.sort((a, b) => a.date.localeCompare(b.date));
+        recalcReview(t);
+        saveData();
+        closeSessionModal();
+        renderAll();
+        if (currentDetailTopic === id) openDetail(id);
+      }
 
-/* =================================================================
+      /* =================================================================
    MODAL — Simulacro
    ================================================================= */
-function openSimModal() {
-  document.getElementById("sim-date").value = todayISO();
-  document.getElementById("sim-aciertos").value = "";
-  document.getElementById("sim-total").value = "100";
-  document.getElementById("sim-errores").value = "";
-  document.getElementById("sim-blancos").value = "";
-  document.getElementById("sim-tiempo").value = "";
-  document.getElementById("sim-nota").value = "";
-  document.getElementById("sim-desglose").value = "";
-  document.getElementById("sim-notas").value = "";
-  document.getElementById("sim-modal").classList.add("open");
-}
-function closeSimModal() { document.getElementById("sim-modal").classList.remove("open"); }
+      function openSimModal() {
+        document.getElementById("sim-date").value = todayISO();
+        document.getElementById("sim-aciertos").value = "";
+        document.getElementById("sim-total").value = "100";
+        document.getElementById("sim-errores").value = "";
+        document.getElementById("sim-blancos").value = "";
+        document.getElementById("sim-tiempo").value = "";
+        document.getElementById("sim-nota").value = "";
+        document.getElementById("sim-desglose").value = "";
+        document.getElementById("sim-notas").value = "";
+        document.getElementById("sim-modal").classList.add("open");
+      }
+      function closeSimModal() {
+        document.getElementById("sim-modal").classList.remove("open");
+      }
 
-// Auto-calc nota neta
-['sim-aciertos','sim-errores','sim-total'].forEach(id => {
-  document.getElementById(id).addEventListener("input", () => {
-    const a = parseFloat(document.getElementById("sim-aciertos").value) || 0;
-    const e = parseFloat(document.getElementById("sim-errores").value) || 0;
-    const nota = a - (e / 3);
-    document.getElementById("sim-nota").value = nota.toFixed(2);
-  });
-});
+      // Auto-calc nota neta
+      ["sim-aciertos", "sim-errores", "sim-total"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", () => {
+          const a =
+            parseFloat(document.getElementById("sim-aciertos").value) || 0;
+          const e =
+            parseFloat(document.getElementById("sim-errores").value) || 0;
+          const nota = a - e / 3;
+          document.getElementById("sim-nota").value = nota.toFixed(2);
+        });
+      });
 
-function saveSimulacro() {
-  const date = document.getElementById("sim-date").value;
-  const aciertos = parseInt(document.getElementById("sim-aciertos").value);
-  const total = parseInt(document.getElementById("sim-total").value);
-  const errores = parseInt(document.getElementById("sim-errores").value) || 0;
-  const blancos = parseInt(document.getElementById("sim-blancos").value) || 0;
-  const tiempo = parseInt(document.getElementById("sim-tiempo").value) || null;
-  const desglose = document.getElementById("sim-desglose").value.trim();
-  const notas = document.getElementById("sim-notas").value.trim();
+      function saveSimulacro() {
+        const date = document.getElementById("sim-date").value;
+        const aciertos = parseInt(
+          document.getElementById("sim-aciertos").value,
+        );
+        const total = parseInt(document.getElementById("sim-total").value);
+        const errores =
+          parseInt(document.getElementById("sim-errores").value) || 0;
+        const blancos =
+          parseInt(document.getElementById("sim-blancos").value) || 0;
+        const tiempo =
+          parseInt(document.getElementById("sim-tiempo").value) || null;
+        const desglose = document.getElementById("sim-desglose").value.trim();
+        const notas = document.getElementById("sim-notas").value.trim();
 
-  if (!date || isNaN(aciertos) || isNaN(total)) { alert("Fecha, aciertos y total son obligatorios."); return; }
+        if (!date || isNaN(aciertos) || isNaN(total)) {
+          alert("Fecha, aciertos y total son obligatorios.");
+          return;
+        }
 
-  const notaNeta = aciertos - (errores / 3);
-  data.simulacros.push({ date, aciertos, totalPreguntas:total, errores, blancos, tiempo, notaNeta, desglose, notas });
-  data.simulacros.sort((a,b) => a.date.localeCompare(b.date));
-  saveData(); closeSimModal(); renderAll();
-}
+        const notaNeta = aciertos - errores / 3;
+        data.simulacros.push({
+          date,
+          aciertos,
+          totalPreguntas: total,
+          errores,
+          blancos,
+          tiempo,
+          notaNeta,
+          desglose,
+          notas,
+        });
+        data.simulacros.sort((a, b) => a.date.localeCompare(b.date));
+        saveData();
+        closeSimModal();
+        renderAll();
+      }
 
-/* =================================================================
+      /* =================================================================
    MODAL — Detalle tema
    ================================================================= */
-let currentDetailTopic = null;
+      let currentDetailTopic = null;
 
-function openDetail(id) {
-  currentDetailTopic = id;
-  const t = topicById(id); if (!t) return;
-  document.getElementById("detail-title").textContent = `${t.id} — ${t.title}`;
-  document.getElementById("detail-block").textContent = t.block === "común" ? "Bloque I — Comun" : "Bloque II — Especifico";
+      function openDetail(id) {
+        currentDetailTopic = id;
+        const t = topicById(id);
+        if (!t) return;
+        document.getElementById("detail-title").textContent =
+          `${t.id} — ${t.title}`;
+        document.getElementById("detail-block").textContent =
+          t.block === "común" ? "Bloque I — Comun" : "Bloque II — Especifico";
 
-  const ls = lastScore(t);
-  const intervals = getIntervals(t);
+        const ls = lastScore(t);
+        const intervals = getIntervals(t);
 
-  document.getElementById("detail-stats").innerHTML = `
+        document.getElementById("detail-stats").innerHTML = `
     <span class="pill pill-${t.status}">${statusLabel(t.status)}</span>
     <span style="font-family:var(--mono);font-size:.8rem;">Ultimo: ${ls !== null ? ls.toFixed(1) : "—"}</span>
     <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2)">Prox: ${t.nextReviewDate ? fmtFull(t.nextReviewDate) : "—"}</span>
-    <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2)">Paso ${(t.intervalIndex||0)+1}/${intervals.length}</span>
+    <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2)">Paso ${(t.intervalIndex || 0) + 1}/${intervals.length}</span>
     <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2)">${t.studySessions.length} sesiones</span>
   `;
 
-  const list = document.getElementById("detail-sessions");
-  if (!t.studySessions.length) {
-    list.innerHTML = '<li class="empty-state">Sin sesiones.</li>';
-  } else {
-    list.innerHTML = [...t.studySessions].reverse().map((s, ri) => {
-      const idx = t.studySessions.length - 1 - ri;
-      const col = s.score >= 8 ? "var(--verde)" : s.score >= 6 ? "var(--amarillo)" : "var(--rojo)";
-      return `<li class="session-item">
+        const list = document.getElementById("detail-sessions");
+        if (!t.studySessions.length) {
+          list.innerHTML = '<li class="empty-state">Sin sesiones.</li>';
+        } else {
+          list.innerHTML = [...t.studySessions]
+            .reverse()
+            .map((s, ri) => {
+              const idx = t.studySessions.length - 1 - ri;
+              const col =
+                s.score >= 8
+                  ? "var(--verde)"
+                  : s.score >= 6
+                    ? "var(--amarillo)"
+                    : "var(--rojo)";
+              return `<li class="session-item">
         <span class="s-date">${fmtFull(s.date)}</span>
         <span class="s-score" style="color:${col}">${s.score.toFixed(1)}</span>
-        ${s.durationMin ? `<span class="s-dur">${s.durationMin}min</span>` : ''}
+        ${s.durationMin ? `<span class="s-dur">${s.durationMin}min</span>` : ""}
         <button class="session-delete" onclick="deleteSession('${t.id}',${idx})">✕</button>
-        ${s.notes ? `<span class="s-notes">${escHtml(s.notes)}</span>` : ''}
+        ${s.notes ? `<span class="s-notes">${escHtml(s.notes)}</span>` : ""}
       </li>`;
-    }).join("");
-  }
-  document.getElementById("detail-overlay").classList.add("open");
-}
-function closeDetail() { document.getElementById("detail-overlay").classList.remove("open"); currentDetailTopic = null; }
-function deleteSession(tid, idx) {
-  if (!confirm("¿Eliminar sesion?")) return;
-  const t = topicById(tid);
-  t.studySessions.splice(idx, 1);
-  recalcReview(t); saveData(); renderAll(); openDetail(tid);
-}
+            })
+            .join("");
+        }
+        document.getElementById("detail-overlay").classList.add("open");
+      }
+      function closeDetail() {
+        document.getElementById("detail-overlay").classList.remove("open");
+        currentDetailTopic = null;
+      }
+      function deleteSession(tid, idx) {
+        if (!confirm("¿Eliminar sesion?")) return;
+        const t = topicById(tid);
+        t.studySessions.splice(idx, 1);
+        recalcReview(t);
+        saveData();
+        renderAll();
+        openDetail(tid);
+      }
 
-/* =================================================================
+      /* =================================================================
    IMPORT / EXPORT
    ================================================================= */
-function exportJSON() {
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `studietto-${todayISO()}.json`;
-  a.click(); URL.revokeObjectURL(a.href);
-}
-function importJSON(event) {
-  const file = event.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const imp = JSON.parse(e.target.result);
-      if (!imp.topics) { alert("Formato invalido."); return; }
-      data = imp;
-      if (!data.simulacros) data.simulacros = [];
-      saveData(); renderAll(); alert("Datos importados.");
-    } catch(err) { alert("Error: " + err.message); }
-  };
-  reader.readAsText(file);
-  event.target.value = "";
-}
+      function exportJSON() {
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+          type: "application/json",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `studietto-${todayISO()}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+      function importJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const imp = JSON.parse(e.target.result);
+            if (!imp.topics) {
+              alert("Formato invalido.");
+              return;
+            }
+            data = imp;
+            if (!data.simulacros) data.simulacros = [];
+            saveData();
+            renderAll();
+            alert("Datos importados.");
+          } catch (err) {
+            alert("Error: " + err.message);
+          }
+        };
+        reader.readAsText(file);
+        event.target.value = "";
+      }
 
-/* =================================================================
+      /* =================================================================
    TEMA
    ================================================================= */
-function applyTheme() {
-  document.body.classList.toggle("dark", data.theme === "dark");
-  document.getElementById("theme-toggle").textContent = data.theme === "dark" ? "Light" : "Dark";
-}
-function toggleTheme() { data.theme = data.theme === "dark" ? "light" : "dark"; saveData(); applyTheme(); renderAll(); }
+      function applyTheme() {
+        document.body.classList.toggle("dark", data.theme === "dark");
+        document.getElementById("theme-toggle").textContent =
+          data.theme === "dark" ? "Light" : "Dark";
+      }
+      function toggleTheme() {
+        data.theme = data.theme === "dark" ? "light" : "dark";
+        saveData();
+        applyTheme();
+        renderAll();
+      }
 
-/* =================================================================
+      /* =================================================================
    TABS
    ================================================================= */
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
-    renderAll();
-  });
-});
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".panel")
+            .forEach((p) => p.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .getElementById("panel-" + tab.dataset.tab)
+            .classList.add("active");
+          renderAll();
+        });
+      });
 
-/* =================================================================
+      /* =================================================================
    RENDER ALL + INIT
    ================================================================= */
-function renderAll() {
-  renderHoy(); renderTemario(); renderSimulacros(); renderStats();
-}
+      function renderAll() {
+        renderHoy();
+        renderTemario();
+        renderSimulacros();
+        renderStats();
+      }
 
-loadData(); applyTheme(); populateTopicSelect(); renderAll();
+      loadData();
+      applyTheme();
+      populateTopicSelect();
+      renderAll();
 
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") { closeSessionModal(); closeDetail(); closeSimModal(); }
-});
-document.getElementById("session-modal").addEventListener("click", function(e) { if(e.target===this) closeSessionModal(); });
-document.getElementById("sim-modal").addEventListener("click", function(e) { if(e.target===this) closeSimModal(); });
-</script>
-</body>
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeSessionModal();
+          closeDetail();
+          closeSimModal();
+        }
+      });
+      document
+        .getElementById("session-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeSessionModal();
+        });
+      document
+        .getElementById("sim-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeSimModal();
+        });
+    </script>
+  </body>
 </html>
