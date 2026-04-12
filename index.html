@@ -705,6 +705,264 @@
         text-align: center;
         letter-spacing: 0.5px;
       }
+
+      /* --- Queue badge (Hoy cap) --- */
+      .queue-badge {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        background: var(--gris-bg);
+        color: var(--gris);
+        border: 1px solid var(--border);
+        padding: 2px 10px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      /* --- Settings overlay --- */
+      .settings-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 200;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+      }
+      .settings-overlay.open {
+        display: flex;
+      }
+
+      /* --- Calendar --- */
+      .cal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .cal-nav-btn {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        padding: 7px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        transition: all 0.15s;
+      }
+      .cal-nav-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .cal-month-title {
+        font-family: var(--mono);
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .cal-stats-row {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--text2);
+        margin-bottom: 14px;
+        padding: 10px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .cal-toggle-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--text2);
+      }
+      .cal-toggle-row input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--accent);
+        cursor: pointer;
+      }
+      .cal-toggle-row label {
+        cursor: pointer;
+      }
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 14px;
+      }
+      .cal-weekday {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text2);
+        background: var(--surface2);
+        padding: 8px 4px;
+        text-align: center;
+        font-weight: 700;
+      }
+      .cal-cell {
+        background: var(--surface);
+        min-height: 72px;
+        padding: 6px 7px 14px;
+        cursor: pointer;
+        transition: background 0.1s;
+        position: relative;
+      }
+      .cal-cell:hover {
+        background: var(--surface2);
+      }
+      .cal-cell.empty {
+        background: var(--bg);
+        cursor: default;
+        min-height: 72px;
+      }
+      .cal-cell.empty:hover {
+        background: var(--bg);
+      }
+      .cal-cell.today {
+        outline: 2px solid var(--accent);
+        outline-offset: -2px;
+      }
+      .cal-cell.overloaded {
+        background: rgba(214, 40, 40, 0.05);
+      }
+      .cal-cell.overloaded:not(.today) {
+        outline: 1.5px solid rgba(214, 40, 40, 0.4);
+        outline-offset: -1.5px;
+      }
+      .cal-day-num {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text2);
+        margin-bottom: 4px;
+      }
+      .cal-cell.today .cal-day-num {
+        color: var(--accent);
+      }
+      .cal-cell.dimmed {
+        opacity: 0.28;
+        cursor: default;
+        pointer-events: none;
+      }
+      .cal-dots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        margin-bottom: 3px;
+      }
+      .cal-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: inline-block;
+      }
+      .cal-dot-rojo { background: var(--rojo); }
+      .cal-dot-amarillo { background: var(--amarillo); }
+      .cal-dot-verde { background: var(--verde); }
+      .cal-count {
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .cal-session-bar {
+        position: absolute;
+        bottom: 4px;
+        left: 6px;
+        right: 6px;
+        height: 3px;
+        background: var(--accent);
+        border-radius: 1px;
+        opacity: 0.65;
+      }
+      .cal-legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--text2);
+        padding: 10px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        margin-bottom: 20px;
+        align-items: center;
+      }
+      .cal-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* --- Calendar day modal --- */
+      .calday-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 300;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 16px;
+        padding-top: 5vh;
+      }
+      .calday-overlay.open {
+        display: flex;
+      }
+      .calday-panel {
+        background: var(--surface);
+        border: 2px solid var(--text);
+        padding: 24px 28px;
+        width: 100%;
+        max-width: 580px;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      .calday-section-label {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text2);
+        margin: 14px 0 6px;
+        font-weight: 700;
+      }
+      .calday-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 640px) {
+        .cal-cell {
+          min-height: 54px;
+          padding: 4px 4px 12px;
+        }
+        .cal-day-num {
+          font-size: 0.65rem;
+        }
+        .cal-dot {
+          width: 5px;
+          height: 5px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -730,6 +988,7 @@
           <button class="tb-btn" id="theme-toggle" onclick="toggleTheme()">
             Dark
           </button>
+          <button class="tb-btn" onclick="openSettings()">Ajustes</button>
         </div>
       </div>
 
@@ -739,6 +998,7 @@
         <button class="tab" data-tab="temario">Temario</button>
         <button class="tab" data-tab="simulacros">Simulacros</button>
         <button class="tab" data-tab="stats">Estadisticas</button>
+        <button class="tab" data-tab="calendario">Calendario</button>
       </div>
 
       <!-- ============ HOY ============ -->
@@ -767,6 +1027,7 @@
           <div class="section-head">
             <h2>Repasos pendientes</h2>
             <span class="badge" id="due-count">0</span>
+            <span class="queue-badge" id="queue-badge" style="display:none;"></span>
           </div>
           <div id="due-list"></div>
         </div>
@@ -879,6 +1140,32 @@
             <div class="stat-value" id="total-sessions">0</div>
             <div class="stat-label">Sesiones totales</div>
           </div>
+        </div>
+      </div>
+
+      <!-- ============ CALENDARIO ============ -->
+      <div class="panel" id="panel-calendario">
+        <div class="cal-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="cal-nav-btn" onclick="calPrevMonth()">&#8592;</button>
+            <span class="cal-month-title" id="cal-month-title"></span>
+            <button class="cal-nav-btn" onclick="calNextMonth()">&#8594;</button>
+          </div>
+          <button class="cal-nav-btn" onclick="calGoToday()">Hoy</button>
+        </div>
+        <div class="cal-stats-row" id="cal-stats-row"></div>
+        <div class="cal-toggle-row">
+          <input type="checkbox" id="cal-only-pending" onchange="calTogglePending(this.checked)" />
+          <label for="cal-only-pending">Solo repasos pendientes</label>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-rojo"></span> Rojo</span>
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-amarillo"></span> Amarillo</span>
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-verde"></span> Verde</span>
+          <span class="cal-legend-item"><span style="display:inline-block;width:26px;height:3px;background:var(--accent);border-radius:1px;opacity:.65;vertical-align:middle;"></span> Sesiones registradas</span>
+          <span class="cal-legend-item"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid rgba(214,40,40,.45);background:rgba(214,40,40,.05);"></span> Sobrecarga (&gt;cap)</span>
+          <span class="cal-legend-item"><span style="display:inline-block;width:13px;height:13px;outline:2px solid var(--accent);outline-offset:-2px;"></span> Hoy</span>
         </div>
       </div>
     </div>
@@ -1077,6 +1364,30 @@
             Guardar
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- ============ MODAL: Ajustes ============ -->
+    <div class="settings-overlay" id="settings-overlay"
+         onclick="if(event.target===this)closeSettings()">
+      <div class="modal">
+        <h2>Ajustes</h2>
+        <div class="form-group">
+          <label>Repasos máximos por día</label>
+          <input type="number" id="s-max-repasos" min="1" max="99" step="1" value="6" />
+        </div>
+        <div class="form-actions">
+          <button class="tb-btn" onclick="closeSettings()">Cancelar</button>
+          <button class="tb-btn primary" onclick="saveSettingsForm()">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MODAL: Día del calendario ============ -->
+    <div class="calday-overlay" id="calday-overlay"
+         onclick="if(event.target===this)closeCalDay()">
+      <div class="calday-panel">
+        <div id="calday-content"></div>
       </div>
     </div>
 
@@ -1457,18 +1768,73 @@
       }
 
       /* =================================================================
+   AJUSTES
+   ================================================================= */
+      const SETTINGS_KEY = "studietto-settings";
+      function getSettings() {
+        try {
+          const raw = localStorage.getItem(SETTINGS_KEY);
+          if (raw) return Object.assign({ maxRepasosDia: 6 }, JSON.parse(raw));
+        } catch (e) {}
+        return { maxRepasosDia: 6 };
+      }
+      function saveSettings(s) {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+      }
+      function openSettings() {
+        document.getElementById("s-max-repasos").value =
+          getSettings().maxRepasosDia;
+        document.getElementById("settings-overlay").classList.add("open");
+      }
+      function closeSettings() {
+        document.getElementById("settings-overlay").classList.remove("open");
+      }
+      function saveSettingsForm() {
+        const v = parseInt(document.getElementById("s-max-repasos").value);
+        if (isNaN(v) || v < 1) {
+          alert("Introduce un número válido (mínimo 1).");
+          return;
+        }
+        saveSettings({ maxRepasosDia: v });
+        closeSettings();
+        renderAll();
+      }
+
+      /* =================================================================
    RENDER — HOY
    ================================================================= */
       function renderHoy() {
         document.getElementById("today-label").textContent = todayISO();
         document.getElementById("today-header").textContent = todayFull();
         const today = todayISO();
+        const cap = getSettings().maxRepasosDia;
+        const statusOrder = { rojo: 0, amarillo: 1, verde: 2, sin: 3 };
 
-        // Due
-        const due = data.topics
+        // All overdue/due topics, sorted by priority
+        const allDue = data.topics
           .filter((t) => t.nextReviewDate && t.nextReviewDate <= today)
-          .sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
+          .sort((a, b) => {
+            const overA = daysDiff(today, a.nextReviewDate);
+            const overB = daysDiff(today, b.nextReviewDate);
+            if (overB !== overA) return overB - overA; // most overdue first
+            const sd =
+              (statusOrder[a.status] ?? 3) - (statusOrder[b.status] ?? 3);
+            if (sd !== 0) return sd; // rojo before amarillo before verde
+            return a.nextReviewDate.localeCompare(b.nextReviewDate);
+          });
+
+        const due = allDue.slice(0, cap);
+        const queueCount = allDue.length - due.length;
+
         document.getElementById("due-count").textContent = due.length;
+        const queueBadge = document.getElementById("queue-badge");
+        if (queueCount > 0) {
+          queueBadge.textContent = `+${queueCount} en cola`;
+          queueBadge.style.display = "";
+        } else {
+          queueBadge.style.display = "none";
+        }
+
         const dueEl = document.getElementById("due-list");
         if (!due.length) {
           dueEl.innerHTML =
@@ -1836,6 +2202,240 @@
       }
 
       /* =================================================================
+   RENDER — CALENDARIO
+   ================================================================= */
+      const MONTHS_ES = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+      ];
+      const WDS_ES = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+
+      let calYear = new Date().getFullYear();
+      let calMonth = new Date().getMonth();
+      let calOnlyPending = false;
+
+      function calPrevMonth() {
+        if (calMonth === 0) { calMonth = 11; calYear--; }
+        else calMonth--;
+        renderCalendario();
+      }
+      function calNextMonth() {
+        if (calMonth === 11) { calMonth = 0; calYear++; }
+        else calMonth++;
+        renderCalendario();
+      }
+      function calGoToday() {
+        const now = new Date();
+        calYear = now.getFullYear();
+        calMonth = now.getMonth();
+        renderCalendario();
+      }
+      function calTogglePending(checked) {
+        calOnlyPending = checked;
+        renderCalendario();
+      }
+
+      function renderCalendario() {
+        const today = todayISO();
+        const cap = getSettings().maxRepasosDia;
+
+        document.getElementById("cal-month-title").textContent =
+          `${MONTHS_ES[calMonth]} ${calYear}`;
+
+        // Build lookup maps
+        const reviewsByDate = {};
+        const sessionsByDate = {};
+        for (const t of data.topics) {
+          if (t.nextReviewDate) {
+            if (!reviewsByDate[t.nextReviewDate])
+              reviewsByDate[t.nextReviewDate] = [];
+            reviewsByDate[t.nextReviewDate].push(t);
+          }
+          for (const s of t.studySessions) {
+            if (!sessionsByDate[s.date]) sessionsByDate[s.date] = [];
+            sessionsByDate[s.date].push({ t, s });
+          }
+        }
+
+        // Month stats
+        const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+        const monthPrefix = `${calYear}-${String(calMonth + 1).padStart(2, "0")}`;
+        let mSessions = 0, mPending = 0, mOverloaded = 0;
+        for (let d = 1; d <= daysInMonth; d++) {
+          const ds = `${monthPrefix}-${String(d).padStart(2, "0")}`;
+          const rev = reviewsByDate[ds] || [];
+          const ses = sessionsByDate[ds] || [];
+          mSessions += ses.length;
+          if (ds >= today) mPending += rev.length;
+          if (rev.length > cap) mOverloaded++;
+        }
+        document.getElementById("cal-stats-row").innerHTML =
+          `<span>${mSessions} sesiones registradas</span>` +
+          `<span>${mPending} repasos pendientes</span>` +
+          `<span>${mOverloaded > 0
+            ? `<span style="color:var(--rojo);font-weight:700;">${mOverloaded} días con sobrecarga</span>`
+            : "0 días con sobrecarga"}</span>`;
+
+        // Grid
+        const firstDow = new Date(calYear, calMonth, 1).getDay();
+        const startOffset = (firstDow + 6) % 7; // Mon=0
+
+        let html = WDS_ES.map(
+          (w) => `<div class="cal-weekday">${w}</div>`
+        ).join("");
+
+        for (let i = 0; i < startOffset; i++)
+          html += '<div class="cal-cell empty"></div>';
+
+        for (let d = 1; d <= daysInMonth; d++) {
+          const ds = `${monthPrefix}-${String(d).padStart(2, "0")}`;
+          const reviews = reviewsByDate[ds] || [];
+          const sessions = sessionsByDate[ds] || [];
+          const isToday = ds === today;
+          const isPast = ds < today;
+          const isOverloaded = reviews.length > cap;
+
+          // pending-only mode: dim days with no future reviews
+          if (calOnlyPending && (isPast || reviews.length === 0)) {
+            html += `<div class="cal-cell empty dimmed">
+              <div class="cal-day-num">${d}</div>
+            </div>`;
+            continue;
+          }
+
+          // Count reviews by status
+          const cnt = { rojo: 0, amarillo: 0, verde: 0 };
+          for (const t of reviews) {
+            if (cnt[t.status] !== undefined) cnt[t.status]++;
+          }
+
+          let dotsHtml = '<div class="cal-dots">';
+          const statusColors = [
+            ["rojo", cnt.rojo],
+            ["amarillo", cnt.amarillo],
+            ["verde", cnt.verde],
+          ];
+          for (const [color, n] of statusColors) {
+            if (!n) continue;
+            if (n <= 3) {
+              for (let i = 0; i < n; i++)
+                dotsHtml += `<span class="cal-dot cal-dot-${color}"></span>`;
+            } else {
+              dotsHtml += `<span class="cal-dot cal-dot-${color}"></span>`;
+              dotsHtml += `<span class="cal-count" style="color:var(--${color});">×${n}</span>`;
+            }
+          }
+          dotsHtml += "</div>";
+
+          const sesIndicator =
+            sessions.length > 0
+              ? `<span style="font-family:var(--mono);font-size:.55rem;color:var(--accent);display:block;">✓ ${sessions.length}</span>
+                 <div class="cal-session-bar"></div>`
+              : "";
+
+          let cls = "cal-cell";
+          if (isToday) cls += " today";
+          if (isOverloaded) cls += " overloaded";
+
+          html += `<div class="${cls}" onclick="openCalDay('${ds}')">
+            <div class="cal-day-num">${d}</div>
+            ${dotsHtml}
+            ${sesIndicator}
+          </div>`;
+        }
+
+        // Fill trailing empty cells to complete last row
+        const totalCells = startOffset + daysInMonth;
+        const trail = totalCells % 7;
+        if (trail !== 0)
+          for (let i = trail; i < 7; i++)
+            html += '<div class="cal-cell empty"></div>';
+
+        document.getElementById("cal-grid").innerHTML = html;
+      }
+
+      /* =================================================================
+   CALENDARIO — Detalle día
+   ================================================================= */
+      function openCalDay(dateStr) {
+        const today = todayISO();
+        const isPast = dateStr < today;
+        const reviews = data.topics.filter(
+          (t) => t.nextReviewDate === dateStr
+        );
+        const sessions = [];
+        for (const t of data.topics)
+          for (const s of t.studySessions)
+            if (s.date === dateStr) sessions.push({ t, s });
+
+        const fDate = new Date(dateStr + "T12:00:00").toLocaleDateString(
+          "es-ES",
+          { weekday: "long", day: "numeric", month: "long", year: "numeric" }
+        );
+
+        let html = `<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px;">
+          <div style="font-family:var(--mono);font-size:.85rem;font-weight:700;text-transform:capitalize;">${fDate}</div>
+          <button class="tb-btn" onclick="closeCalDay()">X</button>
+        </div>`;
+
+        // Reviews
+        html += `<div class="calday-section-label">Repasos programados · ${reviews.length}</div>`;
+        if (!reviews.length) {
+          html += `<div style="font-family:var(--mono);font-size:.75rem;color:var(--text2);padding:8px 0;">Sin repasos programados.</div>`;
+        } else {
+          for (const t of reviews) {
+            const ls = lastScore(t);
+            const ld = lastDate(t);
+            const over = daysDiff(today, t.nextReviewDate);
+            const overTxt =
+              over > 0
+                ? `<span class="overdue" style="font-size:.7rem;">${over}d retraso</span>`
+                : over === 0
+                ? `<span style="color:var(--verde);font-family:var(--mono);font-size:.7rem;">hoy</span>`
+                : `<span style="font-family:var(--mono);font-size:.7rem;color:var(--text2);">en ${-over}d</span>`;
+            html += `<div class="calday-row">
+              <span class="dot dot-${t.status}"></span>
+              <span style="font-family:var(--mono);font-size:.72rem;font-weight:700;min-width:32px;">${t.id}</span>
+              <span style="flex:1;font-size:.85rem;">${escHtml(t.title)}</span>
+              <span class="pill pill-${t.status}" style="font-size:.58rem;">${statusLabel(t.status)}</span>
+              <span style="font-family:var(--mono);font-size:.7rem;color:var(--text2);">${ls !== null ? ls.toFixed(1) : "—"}</span>
+              ${overTxt}
+              ${!isPast ? `<button class="btn-sm" onclick="closeCalDay();openSessionModalForTopic('${t.id}')">Registrar</button>` : ""}
+            </div>`;
+          }
+        }
+
+        // Sessions
+        html += `<div class="calday-section-label" style="margin-top:16px;">Sesiones registradas · ${sessions.length}</div>`;
+        if (!sessions.length) {
+          html += `<div style="font-family:var(--mono);font-size:.75rem;color:var(--text2);padding:8px 0;">Sin sesiones registradas.</div>`;
+        } else {
+          for (const { t, s } of sessions) {
+            const col =
+              s.score >= 8
+                ? "var(--verde)"
+                : s.score >= 6
+                ? "var(--amarillo)"
+                : "var(--rojo)";
+            html += `<div class="calday-row">
+              <span style="font-family:var(--mono);font-size:.72rem;font-weight:700;min-width:32px;">${t.id}</span>
+              <span style="flex:1;font-size:.85rem;">${escHtml(t.title)}</span>
+              <span style="font-family:var(--mono);font-size:.85rem;font-weight:700;color:${col};">${s.score.toFixed(1)}</span>
+              ${s.durationMin ? `<span style="font-family:var(--mono);font-size:.7rem;color:var(--text2);">${s.durationMin}min</span>` : ""}
+              ${s.notes ? `<span style="font-size:.78rem;color:var(--text2);font-style:italic;">${escHtml(s.notes)}</span>` : ""}
+            </div>`;
+          }
+        }
+
+        document.getElementById("calday-content").innerHTML = html;
+        document.getElementById("calday-overlay").classList.add("open");
+      }
+
+      function closeCalDay() {
+        document.getElementById("calday-overlay").classList.remove("open");
+      }
+
+      /* =================================================================
    MODALES — Sesion
    ================================================================= */
       function populateTopicSelect() {
@@ -2109,6 +2709,7 @@
         renderTemario();
         renderSimulacros();
         renderStats();
+        renderCalendario();
       }
 
       loadData();
@@ -2121,6 +2722,8 @@
           closeSessionModal();
           closeDetail();
           closeSimModal();
+          closeSettings();
+          closeCalDay();
         }
       });
       document
