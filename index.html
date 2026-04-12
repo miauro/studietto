@@ -869,9 +869,15 @@
         flex-shrink: 0;
         display: inline-block;
       }
-      .cal-dot-rojo { background: var(--rojo); }
-      .cal-dot-amarillo { background: var(--amarillo); }
-      .cal-dot-verde { background: var(--verde); }
+      .cal-dot-rojo {
+        background: var(--rojo);
+      }
+      .cal-dot-amarillo {
+        background: var(--amarillo);
+      }
+      .cal-dot-verde {
+        background: var(--verde);
+      }
       .cal-count {
         font-family: var(--mono);
         font-size: 0.55rem;
@@ -1027,7 +1033,11 @@
           <div class="section-head">
             <h2>Repasos pendientes</h2>
             <span class="badge" id="due-count">0</span>
-            <span class="queue-badge" id="queue-badge" style="display:none;"></span>
+            <span
+              class="queue-badge"
+              id="queue-badge"
+              style="display: none"
+            ></span>
           </div>
           <div id="due-list"></div>
         </div>
@@ -1146,26 +1156,75 @@
       <!-- ============ CALENDARIO ============ -->
       <div class="panel" id="panel-calendario">
         <div class="cal-header">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <button class="cal-nav-btn" onclick="calPrevMonth()">&#8592;</button>
+          <div style="display: flex; align-items: center; gap: 10px">
+            <button class="cal-nav-btn" onclick="calPrevMonth()">
+              &#8592;
+            </button>
             <span class="cal-month-title" id="cal-month-title"></span>
-            <button class="cal-nav-btn" onclick="calNextMonth()">&#8594;</button>
+            <button class="cal-nav-btn" onclick="calNextMonth()">
+              &#8594;
+            </button>
           </div>
           <button class="cal-nav-btn" onclick="calGoToday()">Hoy</button>
         </div>
         <div class="cal-stats-row" id="cal-stats-row"></div>
         <div class="cal-toggle-row">
-          <input type="checkbox" id="cal-only-pending" onchange="calTogglePending(this.checked)" />
+          <input
+            type="checkbox"
+            id="cal-only-pending"
+            onchange="calTogglePending(this.checked)"
+          />
           <label for="cal-only-pending">Solo repasos pendientes</label>
         </div>
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-legend">
-          <span class="cal-legend-item"><span class="cal-dot cal-dot-rojo"></span> Rojo</span>
-          <span class="cal-legend-item"><span class="cal-dot cal-dot-amarillo"></span> Amarillo</span>
-          <span class="cal-legend-item"><span class="cal-dot cal-dot-verde"></span> Verde</span>
-          <span class="cal-legend-item"><span style="display:inline-block;width:26px;height:3px;background:var(--accent);border-radius:1px;opacity:.65;vertical-align:middle;"></span> Sesiones registradas</span>
-          <span class="cal-legend-item"><span style="display:inline-block;width:13px;height:13px;border:1.5px solid rgba(214,40,40,.45);background:rgba(214,40,40,.05);"></span> Sobrecarga (&gt;cap)</span>
-          <span class="cal-legend-item"><span style="display:inline-block;width:13px;height:13px;outline:2px solid var(--accent);outline-offset:-2px;"></span> Hoy</span>
+          <span class="cal-legend-item"
+            ><span class="cal-dot cal-dot-rojo"></span> Rojo</span
+          >
+          <span class="cal-legend-item"
+            ><span class="cal-dot cal-dot-amarillo"></span> Amarillo</span
+          >
+          <span class="cal-legend-item"
+            ><span class="cal-dot cal-dot-verde"></span> Verde</span
+          >
+          <span class="cal-legend-item"
+            ><span
+              style="
+                display: inline-block;
+                width: 26px;
+                height: 3px;
+                background: var(--accent);
+                border-radius: 1px;
+                opacity: 0.65;
+                vertical-align: middle;
+              "
+            ></span>
+            Sesiones registradas</span
+          >
+          <span class="cal-legend-item"
+            ><span
+              style="
+                display: inline-block;
+                width: 13px;
+                height: 13px;
+                border: 1.5px solid rgba(214, 40, 40, 0.45);
+                background: rgba(214, 40, 40, 0.05);
+              "
+            ></span>
+            Sobrecarga (&gt;cap)</span
+          >
+          <span class="cal-legend-item"
+            ><span
+              style="
+                display: inline-block;
+                width: 13px;
+                height: 13px;
+                outline: 2px solid var(--accent);
+                outline-offset: -2px;
+              "
+            ></span>
+            Hoy</span
+          >
         </div>
       </div>
     </div>
@@ -1368,24 +1427,39 @@
     </div>
 
     <!-- ============ MODAL: Ajustes ============ -->
-    <div class="settings-overlay" id="settings-overlay"
-         onclick="if(event.target===this)closeSettings()">
+    <div
+      class="settings-overlay"
+      id="settings-overlay"
+      onclick="if (event.target === this) closeSettings();"
+    >
       <div class="modal">
         <h2>Ajustes</h2>
         <div class="form-group">
           <label>Repasos máximos por día</label>
-          <input type="number" id="s-max-repasos" min="1" max="99" step="1" value="6" />
+          <input
+            type="number"
+            id="s-max-repasos"
+            min="1"
+            max="99"
+            step="1"
+            value="6"
+          />
         </div>
         <div class="form-actions">
           <button class="tb-btn" onclick="closeSettings()">Cancelar</button>
-          <button class="tb-btn primary" onclick="saveSettingsForm()">Guardar</button>
+          <button class="tb-btn primary" onclick="saveSettingsForm()">
+            Guardar
+          </button>
         </div>
       </div>
     </div>
 
     <!-- ============ MODAL: Día del calendario ============ -->
-    <div class="calday-overlay" id="calday-overlay"
-         onclick="if(event.target===this)closeCalDay()">
+    <div
+      class="calday-overlay"
+      id="calday-overlay"
+      onclick="if (event.target === this) closeCalDay();"
+    >
       <div class="calday-panel">
         <div id="calday-content"></div>
       </div>
@@ -2205,8 +2279,18 @@
    RENDER — CALENDARIO
    ================================================================= */
       const MONTHS_ES = [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
       ];
       const WDS_ES = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
@@ -2215,13 +2299,17 @@
       let calOnlyPending = false;
 
       function calPrevMonth() {
-        if (calMonth === 0) { calMonth = 11; calYear--; }
-        else calMonth--;
+        if (calMonth === 0) {
+          calMonth = 11;
+          calYear--;
+        } else calMonth--;
         renderCalendario();
       }
       function calNextMonth() {
-        if (calMonth === 11) { calMonth = 0; calYear++; }
-        else calMonth++;
+        if (calMonth === 11) {
+          calMonth = 0;
+          calYear++;
+        } else calMonth++;
         renderCalendario();
       }
       function calGoToday() {
@@ -2260,7 +2348,9 @@
         // Month stats
         const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
         const monthPrefix = `${calYear}-${String(calMonth + 1).padStart(2, "0")}`;
-        let mSessions = 0, mPending = 0, mOverloaded = 0;
+        let mSessions = 0,
+          mPending = 0,
+          mOverloaded = 0;
         for (let d = 1; d <= daysInMonth; d++) {
           const ds = `${monthPrefix}-${String(d).padStart(2, "0")}`;
           const rev = reviewsByDate[ds] || [];
@@ -2272,16 +2362,18 @@
         document.getElementById("cal-stats-row").innerHTML =
           `<span>${mSessions} sesiones registradas</span>` +
           `<span>${mPending} repasos pendientes</span>` +
-          `<span>${mOverloaded > 0
-            ? `<span style="color:var(--rojo);font-weight:700;">${mOverloaded} días con sobrecarga</span>`
-            : "0 días con sobrecarga"}</span>`;
+          `<span>${
+            mOverloaded > 0
+              ? `<span style="color:var(--rojo);font-weight:700;">${mOverloaded} días con sobrecarga</span>`
+              : "0 días con sobrecarga"
+          }</span>`;
 
         // Grid
         const firstDow = new Date(calYear, calMonth, 1).getDay();
         const startOffset = (firstDow + 6) % 7; // Mon=0
 
         let html = WDS_ES.map(
-          (w) => `<div class="cal-weekday">${w}</div>`
+          (w) => `<div class="cal-weekday">${w}</div>`,
         ).join("");
 
         for (let i = 0; i < startOffset; i++)
@@ -2360,9 +2452,7 @@
       function openCalDay(dateStr) {
         const today = todayISO();
         const isPast = dateStr < today;
-        const reviews = data.topics.filter(
-          (t) => t.nextReviewDate === dateStr
-        );
+        const reviews = data.topics.filter((t) => t.nextReviewDate === dateStr);
         const sessions = [];
         for (const t of data.topics)
           for (const s of t.studySessions)
@@ -2370,7 +2460,7 @@
 
         const fDate = new Date(dateStr + "T12:00:00").toLocaleDateString(
           "es-ES",
-          { weekday: "long", day: "numeric", month: "long", year: "numeric" }
+          { weekday: "long", day: "numeric", month: "long", year: "numeric" },
         );
 
         let html = `<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px;">
@@ -2391,8 +2481,8 @@
               over > 0
                 ? `<span class="overdue" style="font-size:.7rem;">${over}d retraso</span>`
                 : over === 0
-                ? `<span style="color:var(--verde);font-family:var(--mono);font-size:.7rem;">hoy</span>`
-                : `<span style="font-family:var(--mono);font-size:.7rem;color:var(--text2);">en ${-over}d</span>`;
+                  ? `<span style="color:var(--verde);font-family:var(--mono);font-size:.7rem;">hoy</span>`
+                  : `<span style="font-family:var(--mono);font-size:.7rem;color:var(--text2);">en ${-over}d</span>`;
             html += `<div class="calday-row">
               <span class="dot dot-${t.status}"></span>
               <span style="font-family:var(--mono);font-size:.72rem;font-weight:700;min-width:32px;">${t.id}</span>
@@ -2415,8 +2505,8 @@
               s.score >= 8
                 ? "var(--verde)"
                 : s.score >= 6
-                ? "var(--amarillo)"
-                : "var(--rojo)";
+                  ? "var(--amarillo)"
+                  : "var(--rojo)";
             html += `<div class="calday-row">
               <span style="font-family:var(--mono);font-size:.72rem;font-weight:700;min-width:32px;">${t.id}</span>
               <span style="flex:1;font-size:.85rem;">${escHtml(t.title)}</span>
@@ -2547,7 +2637,7 @@
           return;
         }
 
-        const notaNeta = aciertos - errores / 3;
+        const notaNeta = aciertos - errores * (1 / 3);
         data.simulacros.push({
           date,
           aciertos,
