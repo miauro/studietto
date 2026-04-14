@@ -161,6 +161,6 @@ La gráfica muestra la evolución de nota neta a lo largo de los simulacros.
 
 ## Diseño
 
-- Modo claro por defecto, toggle a modo oscuro.
+- 4 modos de color, rotando con el botón de tema: **Light → Dark → Amber (CRT terminal) → Vivid (lima verde)**
 - Mobile-responsive (funciona en iPad).
 - Un solo archivo `index.html` — CSS y JS inline, sin dependencias externas salvo Google Fonts.
