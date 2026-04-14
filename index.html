@@ -50,6 +50,50 @@
         --gris-bg: rgba(154, 151, 144, 0.1);
         --shadow: none;
       }
+      /* Amber — CRT terminal */
+      .amber {
+        --bg: #0c0900;
+        --surface: #141000;
+        --surface2: #1e1900;
+        --border: #3a3000;
+        --border2: #5a4c00;
+        --text: #ffbe00;
+        --text2: #8a7010;
+        --accent: #ffbe00;
+        --accent-bg: rgba(255, 190, 0, 0.1);
+        --accent2: #cc9800;
+        --rojo: #ff6200;
+        --rojo-bg: rgba(255, 98, 0, 0.1);
+        --amarillo: #ffaa00;
+        --amarillo-bg: rgba(255, 170, 0, 0.1);
+        --verde: #a8c800;
+        --verde-bg: rgba(168, 200, 0, 0.1);
+        --gris: #5a4e18;
+        --gris-bg: rgba(90, 78, 24, 0.18);
+        --shadow: none;
+      }
+      /* Vintage — warm industrial paper */
+      .vintage {
+        --bg: #ddd8cc;
+        --surface: #edeae2;
+        --surface2: #cbc6bc;
+        --border: #aaa49a;
+        --border2: #857e74;
+        --text: #26221a;
+        --text2: #60584e;
+        --accent: #7c3b1c;
+        --accent-bg: rgba(124, 59, 28, 0.09);
+        --accent2: #5d2c14;
+        --rojo: #b03020;
+        --rojo-bg: rgba(176, 48, 32, 0.1);
+        --amarillo: #b87018;
+        --amarillo-bg: rgba(184, 112, 24, 0.1);
+        --verde: #2d6830;
+        --verde-bg: rgba(45, 104, 48, 0.1);
+        --gris: #7a7468;
+        --gris-bg: rgba(122, 116, 104, 0.12);
+        --shadow: none;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -2759,9 +2803,11 @@
           return;
         }
         let idx = 0;
-        for (const s of st.reviewSessions) {
+        for (let i = 0; i < st.reviewSessions.length; i++) {
+          const s = st.reviewSessions[i];
           if (s.confidence === "bien") {
-            idx = Math.min(idx + 1, V_INTERVALS.length - 1);
+            if (i > 0) idx = Math.min(idx + 1, V_INTERVALS.length - 1);
+            // First session: idx stays 0
           } else if (s.confidence === "mal") {
             idx = 0;
           }
@@ -2770,7 +2816,7 @@
         const last = st.reviewSessions[st.reviewSessions.length - 1];
         st.status = last.confidence;
         st.intervalIndex = idx;
-        const days = last.confidence === "mal" ? 1 : V_INTERVALS[idx];
+        const days = V_INTERVALS[idx];
         const d = new Date(last.date + "T12:00:00");
         d.setDate(d.getDate() + days);
         st.nextReviewDate = d.toISOString().slice(0, 10);
@@ -2786,15 +2832,19 @@
         // Update status & interval inline (no replay needed for forward log)
         st.status = confidence;
         if (confidence === "bien") {
-          st.intervalIndex = Math.min(
-            (st.intervalIndex || 0) + 1,
-            V_INTERVALS.length - 1,
-          );
+          // Only advance after the first session (mirrors topic SR logic)
+          if (st.reviewSessions.length > 1) {
+            st.intervalIndex = Math.min(
+              (st.intervalIndex || 0) + 1,
+              V_INTERVALS.length - 1,
+            );
+          }
+          // First session: intervalIndex stays at 0 → V_INTERVALS[0] = 1 day
         } else if (confidence === "mal") {
           st.intervalIndex = 0;
         }
         // "medio" keeps current intervalIndex
-        const days = confidence === "mal" ? 1 : V_INTERVALS[st.intervalIndex];
+        const days = V_INTERVALS[st.intervalIndex || 0];
         const d = new Date(today + "T12:00:00");
         d.setDate(d.getDate() + days);
         st.nextReviewDate = d.toISOString().slice(0, 10);
@@ -4129,16 +4179,22 @@
       /* =================================================================
    TEMA
    ================================================================= */
+      const THEME_CYCLE = ["light", "dark", "amber", "vintage"];
+      const THEME_NEXT_LABEL = { light: "Dark", dark: "Amber", amber: "Vintage", vintage: "Light" };
+
       function applyTheme() {
-        document.body.classList.toggle("dark", data.theme === "dark");
+        const theme = data.theme || "light";
+        document.body.classList.remove("dark", "amber", "vintage");
+        if (theme !== "light") document.body.classList.add(theme);
         document.getElementById("theme-toggle").textContent =
-          data.theme === "dark" ? "Light" : "Dark";
+          THEME_NEXT_LABEL[theme] || "Dark";
       }
       function toggleTheme() {
-        data.theme = data.theme === "dark" ? "light" : "dark";
+        const cur = data.theme || "light";
+        const idx = THEME_CYCLE.indexOf(cur);
+        data.theme = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
         saveData();
         applyTheme();
-        renderAll();
       }
 
       /* =================================================================
