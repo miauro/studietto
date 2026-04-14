@@ -969,6 +969,130 @@
           height: 5px;
         }
       }
+
+      /* =================================================================
+   VEHÍCULOS TAB
+   ================================================================= */
+      .tipo-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+        vertical-align: middle;
+      }
+      .tipo-fuego {
+        background: var(--rojo);
+      }
+      .tipo-salvamento {
+        background: var(--verde);
+      }
+      .tipo-agua {
+        background: #0ea5e9;
+      }
+      .tipo-especiales {
+        background: #8b5cf6;
+      }
+      .tipo-grua {
+        background: #f59e0b;
+      }
+      .tipo-ligero_bus {
+        background: #0891b2;
+      }
+
+      .v-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 14px 18px;
+        margin-bottom: 8px;
+        transition: border 0.12s;
+      }
+      .v-card-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .v-card-abrev {
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        font-weight: 700;
+        min-width: 56px;
+      }
+      .v-card-denom {
+        flex: 1;
+        font-size: 0.9rem;
+        font-weight: 500;
+        min-width: 160px;
+      }
+      .v-conf-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .vconf-btn {
+        font-family: var(--sans);
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 11px 18px;
+        border: 2px solid;
+        cursor: pointer;
+        transition: all 0.12s;
+        white-space: nowrap;
+        flex: 1;
+        min-width: 110px;
+        letter-spacing: 0.2px;
+      }
+      .vconf-btn-bien {
+        background: var(--verde-bg);
+        border-color: var(--verde);
+        color: var(--verde);
+      }
+      .vconf-btn-bien:hover {
+        background: var(--verde);
+        color: #fff;
+      }
+      .vconf-btn-medio {
+        background: var(--amarillo-bg);
+        border-color: var(--amarillo);
+        color: var(--amarillo);
+      }
+      .vconf-btn-medio:hover {
+        background: var(--amarillo);
+        color: #fff;
+      }
+      .vconf-btn-mal {
+        background: var(--rojo-bg);
+        border-color: var(--rojo);
+        color: var(--rojo);
+      }
+      .vconf-btn-mal:hover {
+        background: var(--rojo);
+        color: #fff;
+      }
+
+      .vtipo-header td {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 10px 12px;
+        background: var(--surface2);
+        cursor: default;
+      }
+      .vtipo-header:hover {
+        background: var(--surface2) !important;
+      }
+
+      @media (max-width: 640px) {
+        .vconf-btn {
+          font-size: 0.75rem;
+          padding: 10px 10px;
+          min-width: 90px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1005,6 +1129,7 @@
         <button class="tab" data-tab="simulacros">Simulacros</button>
         <button class="tab" data-tab="stats">Estadisticas</button>
         <button class="tab" data-tab="calendario">Calendario</button>
+        <button class="tab" data-tab="vehiculos">Vehículos</button>
       </div>
 
       <!-- ============ HOY ============ -->
@@ -1227,6 +1352,101 @@
           >
         </div>
       </div>
+
+      <!-- ============ VEHÍCULOS ============ -->
+      <div class="panel" id="panel-vehiculos">
+        <!-- Mini stats -->
+        <div id="v-mini-stats" style="margin-bottom: 20px"></div>
+
+        <!-- Section 1: Repasos hoy -->
+        <div class="section">
+          <div class="section-head">
+            <h2>Repasos de vehículos hoy</h2>
+            <span class="badge" id="v-due-count">0</span>
+            <span
+              class="queue-badge"
+              id="v-queue-badge"
+              style="display: none"
+            ></span>
+          </div>
+          <div id="v-due-list"></div>
+        </div>
+
+        <!-- Section 2: Catálogo completo -->
+        <div class="section">
+          <div
+            class="section-head"
+            style="
+              justify-content: space-between;
+              flex-wrap: wrap;
+              gap: 8px;
+              align-items: center;
+            "
+          >
+            <div style="display: flex; align-items: baseline; gap: 10px">
+              <h2>Catálogo completo</h2>
+              <span class="badge">74</span>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <button class="tb-btn" onclick="exportVehiculosJSON()">
+                Export
+              </button>
+              <button
+                class="tb-btn"
+                onclick="document.getElementById('v-import-file').click()"
+              >
+                Import
+              </button>
+              <input
+                type="file"
+                id="v-import-file"
+                accept=".json"
+                style="display: none"
+                onchange="importVehiculosJSON(event)"
+              />
+            </div>
+          </div>
+          <div class="table-controls" style="margin-bottom: 14px">
+            <select id="v-filter-tipo" onchange="renderVehiculosCatalog()">
+              <option value="all">Todos los tipos</option>
+              <option value="fuego">Fuego</option>
+              <option value="salvamento">Salvamento</option>
+              <option value="agua">Agua</option>
+              <option value="especiales">Especiales</option>
+              <option value="grua">Grúa</option>
+              <option value="ligero_bus">Ligero/Bus</option>
+            </select>
+            <select id="v-filter-prop" onchange="renderVehiculosCatalog()">
+              <option value="all">RENT + PROP</option>
+              <option value="RENT">Solo RENT</option>
+              <option value="PROP">Solo PROP</option>
+            </select>
+            <select id="v-filter-status" onchange="renderVehiculosCatalog()">
+              <option value="all">Todos estados</option>
+              <option value="bien">Bien</option>
+              <option value="medio">Medio</option>
+              <option value="mal">Mal</option>
+              <option value="sin_empezar">Sin empezar</option>
+            </select>
+          </div>
+          <div style="overflow-x: auto">
+            <table class="topic-table" id="v-table">
+              <thead>
+                <tr>
+                  <th>Abrev.</th>
+                  <th>Denominación</th>
+                  <th>Matrícula</th>
+                  <th>Prop.</th>
+                  <th>Estado</th>
+                  <th>Último repaso</th>
+                  <th>Próximo repaso</th>
+                </tr>
+              </thead>
+              <tbody id="v-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ============ FAB ============ -->
@@ -1435,7 +1655,7 @@
       <div class="modal">
         <h2>Ajustes</h2>
         <div class="form-group">
-          <label>Repasos máximos por día</label>
+          <label>Repasos máximos por día (temas)</label>
           <input
             type="number"
             id="s-max-repasos"
@@ -1445,12 +1665,92 @@
             value="6"
           />
         </div>
+        <div class="form-group">
+          <label>Repasos máximos por día (vehículos)</label>
+          <input
+            type="number"
+            id="s-max-vehiculos"
+            min="1"
+            max="99"
+            step="1"
+            value="10"
+          />
+        </div>
         <div class="form-actions">
           <button class="tb-btn" onclick="closeSettings()">Cancelar</button>
           <button class="tb-btn primary" onclick="saveSettingsForm()">
             Guardar
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- ============ MODAL: Vehículo Detail ============ -->
+    <div
+      class="detail-overlay"
+      id="vdetail-overlay"
+      onclick="if (event.target === this) closeVDetail();"
+    >
+      <div class="detail-panel" style="max-width: 620px">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+          "
+        >
+          <div>
+            <h2 id="vd-title" style="font-size: 1rem; margin-bottom: 4px"></h2>
+            <div class="detail-block-label" id="vd-meta"></div>
+          </div>
+          <button class="tb-btn" onclick="closeVDetail()">X</button>
+        </div>
+        <div
+          class="detail-stats"
+          id="vd-stats"
+          style="margin-bottom: 16px"
+        ></div>
+
+        <!-- Register review section -->
+        <div style="margin-bottom: 18px">
+          <div
+            style="
+              font-family: var(--mono);
+              font-size: 0.65rem;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              color: var(--text2);
+              margin-bottom: 8px;
+              font-weight: 700;
+            "
+          >
+            Registrar repaso
+          </div>
+          <div class="v-conf-row" id="vd-conf-row"></div>
+          <div style="margin-top: 8px">
+            <textarea
+              id="vd-notes"
+              placeholder="Notas / regla mnemotécnica (opcional)..."
+              style="width: 100%; min-height: 52px; font-size: 0.85rem"
+            ></textarea>
+          </div>
+        </div>
+
+        <div
+          style="
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text2);
+            margin-bottom: 8px;
+            font-weight: 700;
+          "
+        >
+          Historial
+        </div>
+        <ul class="session-list" id="vd-sessions"></ul>
       </div>
     </div>
 
@@ -1687,6 +1987,604 @@
       ];
 
       /* =================================================================
+   VEHÍCULOS SEIS — Catálogo hardcoded (74 entradas)
+   ================================================================= */
+      const VEHICULOS_SEIS_CATALOG = [
+        {
+          id: "V001",
+          abreviatura: "BUL",
+          denominacion: "Bomba Urbana Ligera",
+          matricula_rango: "COCH 1111-1120",
+          tipo: "fuego",
+          propiedad: "RENT",
+        },
+        {
+          id: "V002",
+          abreviatura: "BUL",
+          denominacion: "Bomba Urbana Ligera",
+          matricula_rango: "COCH 1121-1127",
+          tipo: "fuego",
+          propiedad: "PROP",
+        },
+        {
+          id: "V003",
+          abreviatura: "COBO",
+          denominacion: "Coche Bomba",
+          matricula_rango: "CB 1232-1234",
+          tipo: "fuego",
+          propiedad: "RENT",
+        },
+        {
+          id: "V004",
+          abreviatura: "BUP",
+          denominacion: "Bomba Urbana Pesada",
+          matricula_rango: "BO 1222-1231",
+          tipo: "fuego",
+          propiedad: "RENT",
+        },
+        {
+          id: "V005",
+          abreviatura: "BUP",
+          denominacion: "Bomba Urbana Pesada",
+          matricula_rango: "BO 1235-1241",
+          tipo: "fuego",
+          propiedad: "PROP",
+        },
+        {
+          id: "V006",
+          abreviatura: "ES27",
+          denominacion: "Escala 27 m Metz",
+          matricula_rango: "Es27 1351-1352",
+          tipo: "salvamento",
+          propiedad: "RENT",
+        },
+        {
+          id: "V007",
+          abreviatura: "EA",
+          denominacion: "Escala Articulada 32 m Riffaud",
+          matricula_rango: "EA 1354-1355",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V008",
+          abreviatura: "EA32",
+          denominacion: "Escala 32 m Articulada y Telescópica Magirus",
+          matricula_rango: "EA32 1346-1349",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V009",
+          abreviatura: "ES32",
+          denominacion: "Escala 32 m Magirus",
+          matricula_rango: "ES32 1343-1345",
+          tipo: "salvamento",
+          propiedad: "RENT",
+        },
+        {
+          id: "V010",
+          abreviatura: "ES32",
+          denominacion: "Escala 32 m Magirus",
+          matricula_rango: "ES32 1332-1336, 1338, 1341-1342",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V011",
+          abreviatura: "ES32",
+          denominacion: "Escala 32 m Metz",
+          matricula_rango: "ES32 1340",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V012",
+          abreviatura: "ES55",
+          denominacion: "Escala 55 m Magirus",
+          matricula_rango: "ES55 1350",
+          tipo: "salvamento",
+          propiedad: "RENT",
+        },
+        {
+          id: "V013",
+          abreviatura: "ES55",
+          denominacion: "Escala 55 m Magirus",
+          matricula_rango: "ES55 1339",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V014",
+          abreviatura: "BR70",
+          denominacion: "Brazo Extensible o Articulado 70 m",
+          matricula_rango: "BR70 1353",
+          tipo: "salvamento",
+          propiedad: "RENT",
+        },
+        {
+          id: "V015",
+          abreviatura: "BR53",
+          denominacion: "Brazo Extensible o Articulado 53 m",
+          matricula_rango: "BR53 1323",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V016",
+          abreviatura: "FC30",
+          denominacion: "Furgoneta de Colchones",
+          matricula_rango: "FC30 1708-1709",
+          tipo: "salvamento",
+          propiedad: "PROP",
+        },
+        {
+          id: "V017",
+          abreviatura: "FC60",
+          denominacion: "Vehículo de Colchones",
+          matricula_rango: "FC60 1726-1727",
+          tipo: "salvamento",
+          propiedad: "RENT",
+        },
+        {
+          id: "V018",
+          abreviatura: "BRP/BOPA",
+          denominacion: "Bomba Rural Pesada (Bomba de Pasto)",
+          matricula_rango: "BOPA 1550-1560",
+          tipo: "agua",
+          propiedad: "RENT",
+        },
+        {
+          id: "V019",
+          abreviatura: "BOFO",
+          denominacion: "Bomba Forestal",
+          matricula_rango: "BOFO 1561-1565",
+          tipo: "agua",
+          propiedad: "PROP",
+        },
+        {
+          id: "V020",
+          abreviatura: "TANP",
+          denominacion: "Tanque 5.000 L (Tanque Pequeño)",
+          matricula_rango: "TANP 1508-1509",
+          tipo: "agua",
+          propiedad: "RENT",
+        },
+        {
+          id: "V021",
+          abreviatura: "TANM",
+          denominacion: "Tanque 6.500 L (Tanque Mediano)",
+          matricula_rango: "TANM 1504, 1507",
+          tipo: "agua",
+          propiedad: "RENT",
+        },
+        {
+          id: "V022",
+          abreviatura: "TANM",
+          denominacion: "Tanque 6.500 L (Tanque Mediano)",
+          matricula_rango: "TANM 1502-1503",
+          tipo: "agua",
+          propiedad: "PROP",
+        },
+        {
+          id: "V023",
+          abreviatura: "TANM",
+          denominacion: "Tanque 6.500 L (Tanque Mediano)",
+          matricula_rango: "TANM 1512-1515",
+          tipo: "agua",
+          propiedad: "PROP",
+        },
+        {
+          id: "V024",
+          abreviatura: "TANG",
+          denominacion: "Tanque 12.000 L (Tanque Grande)",
+          matricula_rango: "TANG 1510-1511",
+          tipo: "agua",
+          propiedad: "RENT",
+        },
+        {
+          id: "V025",
+          abreviatura: "DSAG",
+          denominacion: "Vehículo de Desagües",
+          matricula_rango: "DSAG 1723-1725",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V026",
+          abreviatura: "DSAG",
+          denominacion: "Vehículo de Desagües",
+          matricula_rango: "DSAG 1387, 1389",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V027",
+          abreviatura: "APEO",
+          denominacion: "Vehículo de Apeos",
+          matricula_rango: "APEO 1714-1717",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V028",
+          abreviatura: "BREC",
+          denominacion: "Vehículo de Salvamento y Desescombro",
+          matricula_rango: "BREC 1719",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V029",
+          abreviatura: "DESC",
+          denominacion: "Vehículo de Descontaminación",
+          matricula_rango: "DESC 1720-1721",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V030",
+          abreviatura: "ELEC",
+          denominacion: "Vehículo Electroventilador",
+          matricula_rango: "ELEC 1359",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V031",
+          abreviatura: "ELEC",
+          denominacion: "Vehículo Electroventilador",
+          matricula_rango: "ELEC 1718",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V032",
+          abreviatura: "RAMP",
+          denominacion: "Vehículo Rampa de Carga",
+          matricula_rango: "RAMP 1363",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V033",
+          abreviatura: "RAMP",
+          denominacion: "Vehículo Rampa de Carga",
+          matricula_rango: "RAMP 1364",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V034",
+          abreviatura: "POLP",
+          denominacion: "Polibrazo de Cabina Simple",
+          matricula_rango: "POLP 1621",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V035",
+          abreviatura: "POLI",
+          denominacion: "Polibrazo de Cabina Doble",
+          matricula_rango: "POLI 1622-1629",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V036",
+          abreviatura: "CTGD",
+          denominacion: "Contenedor de Gran Desagüe",
+          matricula_rango: "CTGD 0112",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V037",
+          abreviatura: "CTAE",
+          denominacion: "Contenedor de Agentes Especiales",
+          matricula_rango: "CTAE 0110-0111",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V038",
+          abreviatura: "CTME",
+          denominacion: "Contenedor de Material de Extinción",
+          matricula_rango: "CTME 0108-0109",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V039",
+          abreviatura: "CTSD",
+          denominacion: "Contenedor de Salvamento y Desescombro",
+          matricula_rango: "CTSD 0105-0106",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V040",
+          abreviatura: "CTPE",
+          denominacion: "Contenedor de Protección Especial",
+          matricula_rango: "CTPE 0101-0102",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V041",
+          abreviatura: "CTPE",
+          denominacion: "Contenedor de Recuperación de Hidrocarburos",
+          matricula_rango: "CTPE 0103-0104",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V042",
+          abreviatura: "ALMA",
+          denominacion: "Furgoneta de Centro de Mando (Apoyo Logístico)",
+          matricula_rango: "ALMA 1713",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V043",
+          abreviatura: "SACU",
+          denominacion: "Furgoneta de Salvamento Acuático",
+          matricula_rango: "SACU 1722",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V044",
+          abreviatura: "AVIT",
+          denominacion: "Furgoneta de Avituallamiento",
+          matricula_rango: "AVIT 1710",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V045",
+          abreviatura: "FENJ",
+          denominacion: "Furgoneta de Enjambres",
+          matricula_rango: "FENJ 1711-1712",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V046",
+          abreviatura: "FDET",
+          denominacion: "Furgón de Detección RBQ",
+          matricula_rango: "FDET 1701",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V047",
+          abreviatura: "FBUT",
+          denominacion: "Furgón de Búsqueda Técnica",
+          matricula_rango: "FBUT 1702",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V048",
+          abreviatura: "FUMV",
+          denominacion: "Furgoneta de Múltiples Víctimas",
+          matricula_rango: "FUMV 1702-1705",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V049",
+          abreviatura: "FUK9",
+          denominacion: "Furgoneta BREC de Búsqueda Cinológica",
+          matricula_rango: "FUK9 1706",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V050",
+          abreviatura: "RMES",
+          denominacion: "Remolque Monolito Escalada",
+          matricula_rango: "RMES 1610",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V051",
+          abreviatura: "RMTH",
+          denominacion: "Remolque Tienda Hinchable",
+          matricula_rango: "RMTH 1609",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V052",
+          abreviatura: "RMGS",
+          denominacion: "Remolque Cisterna de Gasoil",
+          matricula_rango: "RMGS 1608, 1611",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V053",
+          abreviatura: "RMGS",
+          denominacion: "Remolque Cisterna de Gasolina",
+          matricula_rango: "RMGS 1612",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V054",
+          abreviatura: "RMES",
+          denominacion: "Remolque Grupo Electrógeno",
+          matricula_rango: "RMES 1613",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V055",
+          abreviatura: "RMVT",
+          denominacion: "Remolque Ventilador Gran Caudal",
+          matricula_rango: "RMVT 1614",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V056",
+          abreviatura: "RMES",
+          denominacion: "Remolque de Espumógeno",
+          matricula_rango: "RMES 1618-1619",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V057",
+          abreviatura: "RMSA",
+          denominacion: "Remolque de Embarcación",
+          matricula_rango: "RMSA 1615-1617",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V058",
+          abreviatura: "REPA",
+          denominacion: "Retropala",
+          matricula_rango: "REPA 1400",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V059",
+          abreviatura: "APIL",
+          denominacion: "Apiladora",
+          matricula_rango: "APIL 1407",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V060",
+          abreviatura: "REPP",
+          denominacion: "Minicargadora",
+          matricula_rango: "REPP",
+          tipo: "especiales",
+          propiedad: "PROP",
+        },
+        {
+          id: "V061",
+          abreviatura: "EMER",
+          denominacion: "Vehículo de Emergencias",
+          matricula_rango: "EMER 1630-1634",
+          tipo: "especiales",
+          propiedad: "RENT",
+        },
+        {
+          id: "V062",
+          abreviatura: "GR35",
+          denominacion: "Grúa 35 toneladas Luna",
+          matricula_rango: "GR35 1405",
+          tipo: "grua",
+          propiedad: "PROP",
+        },
+        {
+          id: "V063",
+          abreviatura: "GR50",
+          denominacion: "Grúa 50 toneladas Grove",
+          matricula_rango: "GR50 1419",
+          tipo: "grua",
+          propiedad: "PROP",
+        },
+        {
+          id: "V064",
+          abreviatura: "CM",
+          denominacion: "Coche de Mandos (con rotativos)",
+          matricula_rango: "CM 1073-1082",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V065",
+          abreviatura: "CMCR",
+          denominacion: "Coche Movimientos Internos (con rotativos)",
+          matricula_rango: "CMCR 1083-1094",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V066",
+          abreviatura: "CMSR",
+          denominacion: "Coche Movimientos Internos (sin rotativos)",
+          matricula_rango: "CMSR 1001-1008, 1095-1099",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V067",
+          abreviatura: "CMCR",
+          denominacion: "Coche Movimientos Internos (con rotativos)",
+          matricula_rango: "CMCR 1027-1030",
+          tipo: "ligero_bus",
+          propiedad: "PROP",
+        },
+        {
+          id: "V068",
+          abreviatura: "FSUM",
+          denominacion: "Furgoneta Vestuario UALI",
+          matricula_rango: "FSUM 1682-1685",
+          tipo: "ligero_bus",
+          propiedad: "PROP",
+        },
+        {
+          id: "V069",
+          abreviatura: "FURM",
+          denominacion: "Furgoneta Transporte Personal y Carga (Mediano)",
+          matricula_rango: "FURM 1650-1655, 1686-1699",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V070",
+          abreviatura: "FURG",
+          denominacion: "Furgoneta Transporte Personal y Carga (Grande)",
+          matricula_rango: "FURG 1753-1759",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V071",
+          abreviatura: "FURG",
+          denominacion: "Furgoneta Transporte Personal y Carga (Grande)",
+          matricula_rango: "FURG 1656-1663",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V072",
+          abreviatura: "FURG",
+          denominacion: "Furgón de Carga Grande",
+          matricula_rango: "FURG 1676-1678",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V073",
+          abreviatura: "MBUS",
+          denominacion: "Microbús",
+          matricula_rango: "MBUS 1681",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+        {
+          id: "V074",
+          abreviatura: "ABUS",
+          denominacion: "Autobús",
+          matricula_rango: "ABUS 1680",
+          tipo: "ligero_bus",
+          propiedad: "RENT",
+        },
+      ];
+
+      /* =================================================================
    REPASO ESPACIADO
    ================================================================= */
       const INT_STD = [1, 3, 7, 14, 21, 30];
@@ -1790,6 +2688,120 @@
       }
 
       /* =================================================================
+   VEHÍCULOS — Estado (localStorage)
+   ================================================================= */
+      const VSKEY = "vehiculos_sei_state";
+      let vState = {};
+
+      function loadVState() {
+        try {
+          const raw = localStorage.getItem(VSKEY);
+          if (raw) vState = JSON.parse(raw);
+        } catch (e) {
+          console.error(e);
+        }
+        // Ensure every catalog entry has a state record
+        for (const v of VEHICULOS_SEIS_CATALOG) {
+          if (!vState[v.id]) {
+            vState[v.id] = {
+              reviewSessions: [],
+              nextReviewDate: null,
+              intervalIndex: 0,
+              status: "sin_empezar",
+            };
+          }
+        }
+        saveVState();
+      }
+
+      function saveVState() {
+        localStorage.setItem(VSKEY, JSON.stringify(vState));
+      }
+
+      /* =================================================================
+   VEHÍCULOS — Repaso espaciado
+   ================================================================= */
+      const V_INTERVALS = [1, 3, 7, 14, 21, 30];
+
+      const TIPO_LABELS = {
+        fuego: "Fuego",
+        salvamento: "Salvamento",
+        agua: "Agua",
+        especiales: "Especiales",
+        grua: "Grúa",
+        ligero_bus: "Ligero/Bus",
+      };
+      const TIPO_ORDER = [
+        "fuego",
+        "salvamento",
+        "agua",
+        "especiales",
+        "grua",
+        "ligero_bus",
+      ];
+      const TIPO_COLORS = {
+        fuego: "var(--rojo)",
+        salvamento: "var(--verde)",
+        agua: "#0ea5e9",
+        especiales: "#8b5cf6",
+        grua: "#f59e0b",
+        ligero_bus: "#0891b2",
+      };
+
+      // Replay all review sessions to derive correct intervalIndex, status, nextReviewDate
+      function vReplayState(id) {
+        const st = vState[id];
+        if (!st) return;
+        if (!st.reviewSessions.length) {
+          st.status = "sin_empezar";
+          st.nextReviewDate = null;
+          st.intervalIndex = 0;
+          return;
+        }
+        let idx = 0;
+        for (const s of st.reviewSessions) {
+          if (s.confidence === "bien") {
+            idx = Math.min(idx + 1, V_INTERVALS.length - 1);
+          } else if (s.confidence === "mal") {
+            idx = 0;
+          }
+          // "medio" keeps current idx
+        }
+        const last = st.reviewSessions[st.reviewSessions.length - 1];
+        st.status = last.confidence;
+        st.intervalIndex = idx;
+        const days = last.confidence === "mal" ? 1 : V_INTERVALS[idx];
+        const d = new Date(last.date + "T12:00:00");
+        d.setDate(d.getDate() + days);
+        st.nextReviewDate = d.toISOString().slice(0, 10);
+      }
+
+      function vApplyConfidence(id, confidence, notes) {
+        const st = vState[id];
+        if (!st) return;
+        const today = todayISO();
+        const session = { date: today, confidence };
+        if (notes) session.notes = notes;
+        st.reviewSessions.push(session);
+        // Update status & interval inline (no replay needed for forward log)
+        st.status = confidence;
+        if (confidence === "bien") {
+          st.intervalIndex = Math.min(
+            (st.intervalIndex || 0) + 1,
+            V_INTERVALS.length - 1,
+          );
+        } else if (confidence === "mal") {
+          st.intervalIndex = 0;
+        }
+        // "medio" keeps current intervalIndex
+        const days = confidence === "mal" ? 1 : V_INTERVALS[st.intervalIndex];
+        const d = new Date(today + "T12:00:00");
+        d.setDate(d.getDate() + days);
+        st.nextReviewDate = d.toISOString().slice(0, 10);
+        saveVState();
+      }
+
+      /* =================================================================
    UTILIDADES FECHA
    ================================================================= */
       function todayISO() {
@@ -1848,16 +2860,21 @@
       function getSettings() {
         try {
           const raw = localStorage.getItem(SETTINGS_KEY);
-          if (raw) return Object.assign({ maxRepasosDia: 6 }, JSON.parse(raw));
+          if (raw)
+            return Object.assign(
+              { maxRepasosDia: 6, maxVehiculosDia: 10 },
+              JSON.parse(raw),
+            );
         } catch (e) {}
-        return { maxRepasosDia: 6 };
+        return { maxRepasosDia: 6, maxVehiculosDia: 10 };
       }
       function saveSettings(s) {
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
       }
       function openSettings() {
-        document.getElementById("s-max-repasos").value =
-          getSettings().maxRepasosDia;
+        const s = getSettings();
+        document.getElementById("s-max-repasos").value = s.maxRepasosDia;
+        document.getElementById("s-max-vehiculos").value = s.maxVehiculosDia;
         document.getElementById("settings-overlay").classList.add("open");
       }
       function closeSettings() {
@@ -1865,11 +2882,12 @@
       }
       function saveSettingsForm() {
         const v = parseInt(document.getElementById("s-max-repasos").value);
-        if (isNaN(v) || v < 1) {
-          alert("Introduce un número válido (mínimo 1).");
+        const vv = parseInt(document.getElementById("s-max-vehiculos").value);
+        if (isNaN(v) || v < 1 || isNaN(vv) || vv < 1) {
+          alert("Introduce números válidos (mínimo 1).");
           return;
         }
-        saveSettings({ maxRepasosDia: v });
+        saveSettings({ maxRepasosDia: v, maxVehiculosDia: vv });
         closeSettings();
         renderAll();
       }
@@ -2526,6 +3544,357 @@
       }
 
       /* =================================================================
+   VEHÍCULOS — UI helpers
+   ================================================================= */
+      function vStatusPill(status) {
+        const map = {
+          bien: ["verde", "Bien"],
+          medio: ["amarillo", "Medio"],
+          mal: ["rojo", "Mal"],
+          sin_empezar: ["sin", "Sin empezar"],
+        };
+        const [cls, label] = map[status] || ["sin", "Sin empezar"];
+        return `<span class="pill pill-${cls}">${label}</span>`;
+      }
+
+      function vStatusDot(status) {
+        const cls =
+          { bien: "verde", medio: "amarillo", mal: "rojo", sin_empezar: "sin" }[
+            status
+          ] || "sin";
+        return `<span class="dot dot-${cls}"></span>`;
+      }
+
+      function vCalcStreak() {
+        const dates = new Set();
+        for (const id in vState)
+          for (const s of vState[id].reviewSessions || []) dates.add(s.date);
+        if (!dates.size) return 0;
+        const today = todayISO();
+        let streak = 0,
+          check = new Date(today + "T12:00:00");
+        if (!dates.has(today)) check.setDate(check.getDate() - 1);
+        while (dates.has(check.toISOString().slice(0, 10))) {
+          streak++;
+          check.setDate(check.getDate() - 1);
+        }
+        return streak;
+      }
+
+      /* =================================================================
+   VEHÍCULOS — Render
+   ================================================================= */
+      function renderVehiculos() {
+        renderVehiculosDue();
+        renderVehiculosMiniStats();
+        renderVehiculosCatalog();
+      }
+
+      function renderVehiculosMiniStats() {
+        const today = todayISO();
+        const counts = { bien: 0, medio: 0, mal: 0, sin_empezar: 0 };
+        let pendingToday = 0;
+        for (const v of VEHICULOS_SEIS_CATALOG) {
+          const st = vState[v.id];
+          if (!st) continue;
+          counts[st.status] = (counts[st.status] || 0) + 1;
+          if (st.nextReviewDate && st.nextReviewDate <= today) pendingToday++;
+        }
+        document.getElementById("v-mini-stats").innerHTML = `
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+            <div class="stat-card" style="flex:1;min-width:90px;padding:12px 10px;">
+              <div class="stat-value" style="font-size:1.4rem;color:var(--verde)">${counts.bien}</div>
+              <div class="stat-label">Bien</div>
+            </div>
+            <div class="stat-card" style="flex:1;min-width:90px;padding:12px 10px;">
+              <div class="stat-value" style="font-size:1.4rem;color:var(--amarillo)">${counts.medio}</div>
+              <div class="stat-label">Medio</div>
+            </div>
+            <div class="stat-card" style="flex:1;min-width:90px;padding:12px 10px;">
+              <div class="stat-value" style="font-size:1.4rem;color:var(--rojo)">${counts.mal}</div>
+              <div class="stat-label">Mal</div>
+            </div>
+            <div class="stat-card" style="flex:1;min-width:90px;padding:12px 10px;">
+              <div class="stat-value" style="font-size:1.4rem;color:var(--gris)">${counts.sin_empezar}</div>
+              <div class="stat-label">Sin empezar</div>
+            </div>
+            <div class="stat-card" style="flex:1;min-width:90px;padding:12px 10px;">
+              <div class="stat-value" style="font-size:1.4rem;color:var(--accent)">${pendingToday}</div>
+              <div class="stat-label">Pendientes hoy</div>
+            </div>
+            <div class="stat-card" style="flex:1;min-width:90px;padding:12px 10px;">
+              <div class="stat-value" style="font-size:1.4rem;">${vCalcStreak()}</div>
+              <div class="stat-label">Días racha</div>
+            </div>
+          </div>`;
+      }
+
+      function renderVehiculosDue() {
+        const today = todayISO();
+        const cap = getSettings().maxVehiculosDia;
+        const statusOrder = { mal: 0, medio: 1, bien: 2, sin_empezar: 3 };
+
+        const allDue = VEHICULOS_SEIS_CATALOG.filter((v) => {
+          const st = vState[v.id];
+          return st && st.nextReviewDate && st.nextReviewDate <= today;
+        }).sort((a, b) => {
+          const stA = vState[a.id],
+            stB = vState[b.id];
+          const overA = daysDiff(today, stA.nextReviewDate);
+          const overB = daysDiff(today, stB.nextReviewDate);
+          if (overB !== overA) return overB - overA;
+          return (
+            (statusOrder[stA.status] ?? 3) - (statusOrder[stB.status] ?? 3)
+          );
+        });
+
+        const due = allDue.slice(0, cap);
+        const queueCount = allDue.length - due.length;
+
+        document.getElementById("v-due-count").textContent = due.length;
+        const qb = document.getElementById("v-queue-badge");
+        if (queueCount > 0) {
+          qb.textContent = `+${queueCount} en cola`;
+          qb.style.display = "";
+        } else {
+          qb.style.display = "none";
+        }
+
+        const dueEl = document.getElementById("v-due-list");
+        if (!due.length) {
+          dueEl.innerHTML =
+            '<div class="empty-state">Sin vehículos pendientes de repaso hoy.</div>';
+          return;
+        }
+
+        dueEl.innerHTML = due
+          .map((v) => {
+            const st = vState[v.id];
+            const over = daysDiff(today, st.nextReviewDate);
+            const overTxt =
+              over > 0
+                ? `<span class="overdue">${over}d retraso</span>`
+                : `<span style="color:var(--verde)">hoy</span>`;
+            const tipoColor = TIPO_COLORS[v.tipo] || "var(--gris)";
+            return `<div class="v-card">
+            <div class="v-card-header">
+              <span class="tipo-dot" style="background:${tipoColor};"></span>
+              ${vStatusDot(st.status)}
+              <span class="v-card-abrev">${escHtml(v.abreviatura)}</span>
+              <span class="v-card-denom">${escHtml(v.denominacion)}</span>
+              <div class="card-meta">${overTxt}</div>
+              <button class="btn-sm" style="background:var(--surface2);border-color:var(--border);color:var(--text2);" onclick="openVDetail('${v.id}')">Ver</button>
+            </div>
+            <div class="v-conf-row">
+              <button class="vconf-btn vconf-btn-bien" onclick="vLogFromCard('${v.id}','bien')">🟢 Lo sé bien</button>
+              <button class="vconf-btn vconf-btn-medio" onclick="vLogFromCard('${v.id}','medio')">🟡 A medias</button>
+              <button class="vconf-btn vconf-btn-mal" onclick="vLogFromCard('${v.id}','mal')">🔴 No me lo sé</button>
+            </div>
+          </div>`;
+          })
+          .join("");
+      }
+
+      function vLogFromCard(id, confidence) {
+        vApplyConfidence(id, confidence, "");
+        renderVehiculos();
+      }
+
+      function renderVehiculosCatalog() {
+        const today = todayISO();
+        const fTipo = document.getElementById("v-filter-tipo").value;
+        const fProp = document.getElementById("v-filter-prop").value;
+        const fStatus = document.getElementById("v-filter-status").value;
+
+        const filtered = VEHICULOS_SEIS_CATALOG.filter((v) => {
+          if (fTipo !== "all" && v.tipo !== fTipo) return false;
+          if (fProp !== "all" && v.propiedad !== fProp) return false;
+          if (fStatus !== "all") {
+            const st = vState[v.id];
+            if (!st || st.status !== fStatus) return false;
+          }
+          return true;
+        });
+
+        let html = "";
+        const tiposInList = TIPO_ORDER.filter((t) =>
+          filtered.some((v) => v.tipo === t),
+        );
+
+        for (const tipo of tiposInList) {
+          const tipoVehicles = filtered.filter((v) => v.tipo === tipo);
+          if (!tipoVehicles.length) continue;
+          const tipoColor = TIPO_COLORS[tipo] || "var(--gris)";
+          html += `<tr class="vtipo-header">
+            <td colspan="7" style="color:${tipoColor};">
+              <span class="tipo-dot" style="background:${tipoColor};margin-right:6px;"></span>${TIPO_LABELS[tipo] || tipo}
+            </td>
+          </tr>`;
+
+          for (const v of tipoVehicles) {
+            const st = vState[v.id] || {
+              status: "sin_empezar",
+              reviewSessions: [],
+              nextReviewDate: null,
+            };
+            const lastSess = st.reviewSessions.length
+              ? st.reviewSessions[st.reviewSessions.length - 1]
+              : null;
+            const lastD = lastSess ? fmtFull(lastSess.date) : "—";
+            const nextD = st.nextReviewDate ? fmtFull(st.nextReviewDate) : "—";
+            const isOverdue = st.nextReviewDate && st.nextReviewDate < today;
+            html += `<tr onclick="openVDetail('${v.id}')">
+              <td style="font-family:var(--mono);font-weight:700;font-size:.75rem;">${escHtml(v.abreviatura)}</td>
+              <td>${escHtml(v.denominacion)}</td>
+              <td style="font-family:var(--mono);font-size:.7rem;color:var(--text2);">${escHtml(v.matricula_rango)}</td>
+              <td><span class="pill" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border);">${v.propiedad}</span></td>
+              <td>${vStatusPill(st.status)}</td>
+              <td style="font-size:.8rem;">${lastD}</td>
+              <td style="font-size:.8rem;${isOverdue ? "color:var(--rojo);font-weight:700;" : ""}">${nextD}</td>
+            </tr>`;
+          }
+        }
+
+        document.getElementById("v-tbody").innerHTML = html;
+      }
+
+      /* =================================================================
+   VEHÍCULOS — Detail overlay
+   ================================================================= */
+      let currentVDetail = null;
+
+      function openVDetail(id) {
+        currentVDetail = id;
+        const v = VEHICULOS_SEIS_CATALOG.find((x) => x.id === id);
+        if (!v) return;
+        const st = vState[id] || {
+          status: "sin_empezar",
+          reviewSessions: [],
+          nextReviewDate: null,
+          intervalIndex: 0,
+        };
+        const tipoColor = TIPO_COLORS[v.tipo] || "var(--gris)";
+
+        document.getElementById("vd-title").innerHTML =
+          `<strong>${escHtml(v.abreviatura)}</strong> — ${escHtml(v.denominacion)}`;
+        document.getElementById("vd-meta").innerHTML =
+          `<span class="tipo-dot" style="background:${tipoColor};margin-right:4px;"></span>${TIPO_LABELS[v.tipo] || v.tipo} · ${v.propiedad} · <span style="font-family:var(--mono);font-size:.75rem;">${escHtml(v.matricula_rango)}</span>`;
+
+        const lastSess = st.reviewSessions.length
+          ? st.reviewSessions[st.reviewSessions.length - 1]
+          : null;
+        document.getElementById("vd-stats").innerHTML = `
+          ${vStatusPill(st.status)}
+          <span style="font-family:var(--mono);font-size:.8rem;">Último: ${lastSess ? fmtFull(lastSess.date) : "—"}</span>
+          <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2);">Próximo: ${st.nextReviewDate ? fmtFull(st.nextReviewDate) : "—"}</span>
+          <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2);">Paso ${(st.intervalIndex || 0) + 1}/${V_INTERVALS.length}</span>
+          <span style="font-family:var(--mono);font-size:.8rem;color:var(--text2);">${st.reviewSessions.length} repasos</span>`;
+
+        document.getElementById("vd-conf-row").innerHTML = `
+          <button class="vconf-btn vconf-btn-bien" onclick="vLogFromDetail('${id}','bien')">🟢 Lo sé bien</button>
+          <button class="vconf-btn vconf-btn-medio" onclick="vLogFromDetail('${id}','medio')">🟡 A medias</button>
+          <button class="vconf-btn vconf-btn-mal" onclick="vLogFromDetail('${id}','mal')">🔴 No me lo sé</button>`;
+
+        document.getElementById("vd-notes").value = "";
+
+        const confLabel = {
+          bien: ["verde", "Bien"],
+          medio: ["amarillo", "Medio"],
+          mal: ["rojo", "Mal"],
+        };
+        const list = document.getElementById("vd-sessions");
+        if (!st.reviewSessions.length) {
+          list.innerHTML =
+            '<li class="empty-state">Sin repasos registrados.</li>';
+        } else {
+          list.innerHTML = [...st.reviewSessions]
+            .reverse()
+            .map((s, ri) => {
+              const idx = st.reviewSessions.length - 1 - ri;
+              const [cls, label] = confLabel[s.confidence] || ["sin", "?"];
+              return `<li class="session-item">
+              <span class="s-date">${fmtFull(s.date)}</span>
+              <span class="s-score" style="color:var(--${cls})">${label}</span>
+              <button class="session-delete" onclick="deleteVSession('${id}',${idx})" title="Eliminar">✕</button>
+              ${s.notes ? `<span class="s-notes">${escHtml(s.notes)}</span>` : ""}
+            </li>`;
+            })
+            .join("");
+        }
+
+        document.getElementById("vdetail-overlay").classList.add("open");
+      }
+
+      function closeVDetail() {
+        document.getElementById("vdetail-overlay").classList.remove("open");
+        currentVDetail = null;
+      }
+
+      function vLogFromDetail(id, confidence) {
+        const notes = document.getElementById("vd-notes").value.trim();
+        vApplyConfidence(id, confidence, notes);
+        renderVehiculos();
+        openVDetail(id);
+      }
+
+      function deleteVSession(id, idx) {
+        if (!confirm("¿Eliminar este repaso?")) return;
+        vState[id].reviewSessions.splice(idx, 1);
+        vReplayState(id);
+        saveVState();
+        renderVehiculos();
+        openVDetail(id);
+      }
+
+      /* =================================================================
+   VEHÍCULOS — Export / Import
+   ================================================================= */
+      function exportVehiculosJSON() {
+        const blob = new Blob([JSON.stringify(vState, null, 2)], {
+          type: "application/json",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `vehiculos-seis-${todayISO()}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+
+      function importVehiculosJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const imp = JSON.parse(e.target.result);
+            if (typeof imp !== "object" || Array.isArray(imp)) {
+              alert("Formato inválido.");
+              return;
+            }
+            vState = imp;
+            // Ensure all catalog entries exist in state
+            for (const v of VEHICULOS_SEIS_CATALOG) {
+              if (!vState[v.id]) {
+                vState[v.id] = {
+                  reviewSessions: [],
+                  nextReviewDate: null,
+                  intervalIndex: 0,
+                  status: "sin_empezar",
+                };
+              }
+            }
+            saveVState();
+            renderVehiculos();
+            alert("Datos importados.");
+          } catch (err) {
+            alert("Error: " + err.message);
+          }
+        };
+        reader.readAsText(file);
+        event.target.value = "";
+      }
+
+      /* =================================================================
    MODALES — Sesion
    ================================================================= */
       function populateTopicSelect() {
@@ -2800,9 +4169,11 @@
         renderSimulacros();
         renderStats();
         renderCalendario();
+        renderVehiculos();
       }
 
       loadData();
+      loadVState();
       applyTheme();
       populateTopicSelect();
       renderAll();
@@ -2814,6 +4185,7 @@
           closeSimModal();
           closeSettings();
           closeCalDay();
+          closeVDetail();
         }
       });
       document
