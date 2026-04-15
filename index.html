@@ -73,7 +73,7 @@
         --shadow: none;
       }
       /* Vivid — lime green & white, happy */
-      .vintage {
+      .lime {
         --bg: #e6f9d8;
         --surface: #f4fff0;
         --surface2: #ccedac;
@@ -4179,12 +4179,17 @@
       /* =================================================================
    TEMA
    ================================================================= */
-      const THEME_CYCLE = ["light", "dark", "amber", "vintage"];
-      const THEME_NEXT_LABEL = { light: "Dark", dark: "Amber", amber: "Vintage", vintage: "Light" };
+      const THEME_CYCLE = ["light", "dark", "amber", "lime"];
+      const THEME_NEXT_LABEL = {
+        light: "Dark",
+        dark: "Amber",
+        amber: "Lime",
+        lime: "Light",
+      };
 
       function applyTheme() {
         const theme = data.theme || "light";
-        document.body.classList.remove("dark", "amber", "vintage");
+        document.body.classList.remove("dark", "amber", "lime");
         if (theme !== "light") document.body.classList.add(theme);
         document.getElementById("theme-toggle").textContent =
           THEME_NEXT_LABEL[theme] || "Dark";
